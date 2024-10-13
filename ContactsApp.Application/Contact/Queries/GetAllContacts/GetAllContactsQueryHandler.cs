@@ -22,7 +22,7 @@ namespace ContactsApp.Application.Contact.Queries.GetAllContacts
         {
             if (!_memoryCache.TryGetValue(CacheItemKeys.allContactsCacheKey, out IEnumerable<ContactDto> contactDtos))
             {
-                var contacts = await _contactsRepository.GetContacts(cancellationToken);
+                var contacts = await _contactsRepository.GetContacts(request.UserId, cancellationToken);
 
                 contactDtos = contacts.Adapt<IEnumerable<ContactDto>>();
 
