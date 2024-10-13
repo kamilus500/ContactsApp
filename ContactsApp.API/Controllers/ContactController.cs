@@ -28,9 +28,7 @@ namespace ContactsApp.API.Controllers
             var contact = await _mediator.Send(new GetContactByIdQuery(id));
 
             if (contact == null)
-            {
                 return NotFound();
-            }
 
             return Ok(contact);
         }

@@ -23,6 +23,8 @@ namespace ContactsApp.Infrastructure.Extensions
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddApiEndpoints();
 
+            services.AddMemoryCache();
+
             services.AddTransient<IContactsRepository, ContactsRepository>();
         }
     }
