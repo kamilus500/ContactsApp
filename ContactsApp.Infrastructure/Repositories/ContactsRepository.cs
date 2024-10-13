@@ -14,6 +14,14 @@ namespace ContactsApp.Infrastructure.Repositories
         public async Task CreateContact(Contact contact, CancellationToken cancellationToken)
         {
             await _dbContext.Contacts.AddAsync(contact, cancellationToken);
+            await _dbContext.SaveChangesAsync(cancellationToken);  
+        }
+
+        public async Task DeleteContact(string contactId, CancellationToken cancellationToken)
+        {
+            var contact = await _dbContext.Contacts.FirstOrDefaultAsync(x => x.Id == contactId, cancellationToken);
+            _dbContext.Contacts.Remove(contact);
+
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
 

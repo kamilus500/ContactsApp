@@ -9,5 +9,7 @@ namespace ContactsApp.Domain.Interfaces
         Task<Contact> GetContactById(string contactId, CancellationToken cancellationToken);
 
         Task CreateContact(Contact contact, CancellationToken cancellationToken);
+
+        Task DeleteContact(string contactId, CancellationToken cancellationToken);
     }
 }

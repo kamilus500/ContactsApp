@@ -1,4 +1,5 @@
-﻿using ContactsApp.Domain.Interfaces;
+﻿using ContactsApp.Domain.Global;
+using ContactsApp.Domain.Interfaces;
 using Mapster;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
@@ -9,7 +10,7 @@ namespace ContactsApp.Application.Contact.Commands.CreateContact
     {
         private readonly IContactsRepository _contactsRepository;
         private readonly IMemoryCache _memoryCache;
-        private const string allContactsCacheKey = "AllContactsCacheKey";
+        
         public CreateContactCommandHandler(IContactsRepository contactsRepository, IMemoryCache memoryCache)
         {
             _contactsRepository = contactsRepository ?? throw new ArgumentNullException(nameof(contactsRepository));
@@ -22,7 +23,7 @@ namespace ContactsApp.Application.Contact.Commands.CreateContact
             newContact.Id = Guid.NewGuid().ToString();
             await _contactsRepository.CreateContact(newContact, cancellationToken);
 
-            _memoryCache.Remove(allContactsCacheKey);
+            _memoryCache.Remove(CacheItemKeys.allContactsCacheKey);
 
             return newContact;
         }

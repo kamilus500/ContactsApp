@@ -1,10 +1,9 @@
 ﻿using ContactsApp.Application.Contact.Commands.CreateContact;
+using ContactsApp.Application.Contact.Commands.DeleteContact;
 using ContactsApp.Application.Contact.Queries.GetAllContacts;
 using ContactsApp.Application.Contact.Queries.GetContactById;
-using ContactsApp.Domain.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ContactsApp.API.Controllers
@@ -33,11 +32,18 @@ namespace ContactsApp.API.Controllers
             return Ok(contact);
         }
 
-        [HttpPost]
+        [HttpPost("/CreateContact")]
         public async Task<ActionResult> CreateContact([FromBody] CreateContactCommand createContactCommand)
         {
             var createdContact = await _mediator.Send(createContactCommand);
             return Created($"/CreateContact/{createdContact.Id}", createdContact);
+        }
+
+        [HttpDelete("/DeleteContact/{id}")]
+        public async Task<ActionResult> DeleteContact([FromRoute] string id)
+        {
+            await _mediator.Send(new DeleteContactCommand(id));
+            return NoContent();
         }
             
     }

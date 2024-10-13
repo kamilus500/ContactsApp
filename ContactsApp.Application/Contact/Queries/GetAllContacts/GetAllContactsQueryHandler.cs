@@ -1,4 +1,5 @@
 ﻿using ContactsApp.Domain.Dtos;
+using ContactsApp.Domain.Global;
 using ContactsApp.Domain.Interfaces;
 using Mapster;
 using MediatR;
@@ -6,13 +7,12 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace ContactsApp.Application.Contact.Queries.GetAllContacts
 {
-    public class GetAllContactQueryHandler : IRequestHandler<GetAllContactsQuery, IEnumerable<ContactDto>>
+    public class GetAllContactsQueryHandler : IRequestHandler<GetAllContactsQuery, IEnumerable<ContactDto>>
     {
         private readonly IContactsRepository _contactsRepository;
         private readonly IMemoryCache _memoryCache;
-        private const string allContactsCacheKey = "AllContactsCacheKey";
 
-        public GetAllContactQueryHandler(IContactsRepository contactsRepository, IMemoryCache memoryCache)
+        public GetAllContactsQueryHandler(IContactsRepository contactsRepository, IMemoryCache memoryCache)
         {
             _contactsRepository = contactsRepository ?? throw new ArgumentNullException(nameof(contactsRepository));
             _memoryCache = memoryCache ?? throw new ArgumentNullException(nameof(memoryCache));
@@ -20,7 +20,7 @@ namespace ContactsApp.Application.Contact.Queries.GetAllContacts
 
         public async Task<IEnumerable<ContactDto>> Handle(GetAllContactsQuery request, CancellationToken cancellationToken)
         {
-            if (!_memoryCache.TryGetValue(allContactsCacheKey, out IEnumerable<ContactDto> contactDtos))
+            if (!_memoryCache.TryGetValue(CacheItemKeys.allContactsCacheKey, out IEnumerable<ContactDto> contactDtos))
             {
                 var contacts = await _contactsRepository.GetContacts(cancellationToken);
 
@@ -32,7 +32,7 @@ namespace ContactsApp.Application.Contact.Queries.GetAllContacts
                     .SetPriority(CacheItemPriority.Normal)
                     .SetSize(1024);
 
-                _memoryCache.Set(allContactsCacheKey, contactDtos, cacheEntryOptions);
+                _memoryCache.Set(CacheItemKeys.allContactsCacheKey, contactDtos, cacheEntryOptions);
             }
             
             return contactDtos;
