@@ -11,5 +11,7 @@ namespace ContactsApp.Domain.Interfaces
         Task CreateContact(Contact contact, CancellationToken cancellationToken);
 
         Task DeleteContact(string contactId, CancellationToken cancellationToken);
+
+        Task<Contact> UpdateContact(Contact contact, CancellationToken cancellationToken);
     }
 }

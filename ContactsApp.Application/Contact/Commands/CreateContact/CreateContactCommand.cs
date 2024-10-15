@@ -3,7 +3,7 @@ using MediatR;
 
 namespace ContactsApp.Application.Contact.Commands.CreateContact
 {
-    public class CreateContactCommand : CreateContactDto, IRequest<Domain.Entities.Contact>
+    public class CreateContactCommand : CreateUpdateContactDto, IRequest<Domain.Entities.Contact>
     {
         
     }

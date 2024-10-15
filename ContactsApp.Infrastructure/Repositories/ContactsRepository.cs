@@ -35,5 +35,13 @@ namespace ContactsApp.Infrastructure.Repositories
                             .Where(x => x.UserId == userId)
                             .AsNoTracking()
                             .ToListAsync(cancellationToken);
+
+        public async Task<Contact> UpdateContact(Contact contact, CancellationToken cancellationToken)
+        {
+            _dbContext.Contacts.Update(contact);
+            await _dbContext.SaveChangesAsync(cancellationToken);
+
+            return contact;
+        }
     }
 }

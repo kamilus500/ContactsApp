@@ -1,5 +1,6 @@
 ﻿using ContactsApp.Application.Contact.Commands.CreateContact;
 using ContactsApp.Application.Contact.Commands.DeleteContact;
+using ContactsApp.Application.Contact.Commands.UpdateContact;
 using ContactsApp.Application.Contact.Queries.GetAllContacts;
 using ContactsApp.Application.Contact.Queries.GetContactById;
 using MediatR;
@@ -44,6 +45,14 @@ namespace ContactsApp.API.Controllers
         {
             await _mediator.Send(new DeleteContactCommand(id));
             return NoContent();
+        }
+
+        [HttpPut("/UpdateContact")]
+        public async Task<ActionResult> UpdateContact([FromBody] UpdateContactCommand updateContactCommand)
+        {
+            var updatedContact = await _mediator.Send(updateContactCommand);
+
+            return Ok(updatedContact);
         }
             
     }

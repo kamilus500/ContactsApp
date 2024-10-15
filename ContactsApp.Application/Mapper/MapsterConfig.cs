@@ -11,12 +11,14 @@ namespace ContactsApp.Application.Mapper
                 .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.FirstName, src => src.FirstName)
                 .Map(dest => dest.LastName, src => src.LastName)
-                .Map(dest => dest.NumberPhone, src => src.NumberPhone);
+                .Map(dest => dest.NumberPhone, src => src.NumberPhone)
+                .Map(dest => dest.Email, src => src.Email);
 
-            TypeAdapterConfig<CreateContactDto, Domain.Entities.Contact>.NewConfig()
+            TypeAdapterConfig<CreateUpdateContactDto, Domain.Entities.Contact>.NewConfig()
                 .Map(dest => dest.FirstName, src => src.FirstName)
                 .Map(dest => dest.LastName, src => src.LastName)
-                .Map(dest => dest.NumberPhone, src => src.NumberPhone);
+                .Map(dest => dest.NumberPhone, src => src.NumberPhone)
+                .Map(dest => dest.Email, src => src.Email);
         }
     }
 }
