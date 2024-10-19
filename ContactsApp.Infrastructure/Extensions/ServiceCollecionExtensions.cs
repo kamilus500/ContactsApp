@@ -12,6 +12,14 @@ namespace ContactsApp.Infrastructure.Extensions
     {
         public static void AddInfrastructure(this IServiceCollection services, string connectionString)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigins", policy =>
+                {
+                    policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod();
+                });
+            });
+
             services.AddAuthentication()
                 .AddBearerToken(IdentityConstants.BearerScheme);
 
