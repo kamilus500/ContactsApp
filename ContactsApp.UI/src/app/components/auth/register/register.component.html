@@ -1,0 +1,30 @@
+<p-card header="Register">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="p-field p-fluid">
+            <label for="email">Email</label>
+            <input id="email" pInputText formControlName="email" placeholder="Enter your email" />
+            @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+                <p-message severity="error" text="Invalid email"></p-message>
+            }
+        </div>
+        <div class="p-field p-fluid">
+            <label for="password">Password</label>
+            <input id="password" type="password" pInputText formControlName="password" placeholder="Enter your password" />
+            @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+                <p-message severity="error" text="Password is required"></p-message>
+            }
+        </div>
+        <div class="p-field p-fluid">
+            <label for="confirmPassword">Confirm Password</label>
+            <input id="confirmPassword" type="password" pInputText formControlName="confirmPassword"
+                placeholder="Confirm your password" />
+                @if (registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched) {
+                    <p-message severity="error" text="Passwords must match"></p-message>
+                }
+        </div>
+        <div class="p-d-flex p-jc-center">
+        <button pButton label="Register" type="submit" class="p-button-success"
+            [disabled]="registerForm.invalid"></button>
+        </div>
+    </form>
+</p-card>

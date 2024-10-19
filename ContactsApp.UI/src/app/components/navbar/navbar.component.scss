@@ -1,0 +1,16 @@
+.navbar {
+    background-color: #24c73f;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar-center {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+  
+.user-email {
+    font-size: 1.5rem;
+}
