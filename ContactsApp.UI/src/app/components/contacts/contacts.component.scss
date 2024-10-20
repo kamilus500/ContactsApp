@@ -1,10 +1,6 @@
 .contact-card {
     text-align: center;
 
-    .p-avatar {
-        margin-bottom: 1rem;
-    }
-
     .p-card-content {
         padding-top: 0.5rem;
     }
@@ -13,4 +9,19 @@
         font-weight: bold;
         font-size: 1.2rem;
     }
+}
+
+:host ::ng-deep .p-card-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+:host ::ng-deep .p-card-body .p-card-content {
+    padding: 0;
+}
+
+.contact-container {
+    width: 25rem;
 }

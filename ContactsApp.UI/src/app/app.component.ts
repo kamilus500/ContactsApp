@@ -12,7 +12,10 @@ export class AppComponent {
 
   isLogin: WritableSignal<boolean>;
 
-  constructor(private sharedSignalService: SharedSignalService) {
+  constructor(private tokenService: TokenService, private sharedSignalService: SharedSignalService) {
+    if (this.tokenService.hasToken()) {
+      this.sharedSignalService.setLogin(true);
+    }
     this.isLogin = this.sharedSignalService.getLogin();
   }
 }
