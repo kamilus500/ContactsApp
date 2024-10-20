@@ -4,6 +4,7 @@ import { LoginRegisterDto } from '../../../models/loginRegisterDto';
 import { AuthService } from '../../../services/authService';
 import { TokenService } from '../../../services/tokenService';
 import { Router } from '@angular/router';
+import { SharedSignalService } from '../../../services/sharedSignalService';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +17,7 @@ export class LoginComponent {
   constructor(private fb: FormBuilder, 
     private tokenService: TokenService,
     private authService: AuthService,
+    private sharedSignalService: SharedSignalService,
     private router: Router
   ) {
     this.loginForm = this.fb.group({
@@ -31,6 +33,7 @@ export class LoginComponent {
       this.authService.login(loginDto).subscribe(response => {
         if (response.accessToken !== '') {
           this.tokenService.saveToken(response.accessToken);
+          this.sharedSignalService.setLogin(true);
           this.router.navigateByUrl('/contacts');
         }
       })

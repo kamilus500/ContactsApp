@@ -14,9 +14,12 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { AuthService } from './services/authService';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AvatarModule } from 'primeng/avatar';
+import { ContactService } from './services/contactService';
+import { AuthInterceptor } from './interceptors/authInterceptor';
+import { SharedSignalService } from './services/sharedSignalService';
 
 @NgModule({
   declarations: [
@@ -38,7 +41,9 @@ import { AvatarModule } from 'primeng/avatar';
     HttpClientModule,
     AvatarModule
   ],
-  providers: [TokenService],
+  providers: [TokenService, ContactService, AuthService, SharedSignalService, {
+    provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

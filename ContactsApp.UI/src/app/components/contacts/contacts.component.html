@@ -1,2 +1,14 @@
-<app-navbar></app-navbar>
-<p>contacts works!</p>
+<div class="p-justify-center">
+    <div *ngFor="let contact of contacts">
+        <p-card class="contact-card">
+            <ng-template pTemplate="header">
+                <p-avatar image="https://www.gravatar.com/avatar?d=mp" size="large" shape="circle" class="p-mr-2"></p-avatar>
+                <span>{{ contact.firstName }} {{ contact.lastName }}</span>
+            </ng-template>
+            <div class="p-card-content">
+                <p><strong>Email:</strong> {{ contact.email }}</p>
+                <p><strong>Phone:</strong> {{ contact.numberPhone }}</p>
+            </div>
+        </p-card>
+    </div>
+</div>

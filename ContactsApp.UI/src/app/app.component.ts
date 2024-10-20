@@ -1,4 +1,6 @@
-import { Component, WritableSignal } from '@angular/core';
+import { Component, computed, signal, WritableSignal } from '@angular/core';
+import { TokenService } from './services/tokenService';
+import { SharedSignalService } from './services/sharedSignalService';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +10,9 @@ import { Component, WritableSignal } from '@angular/core';
 export class AppComponent {
   title = 'ContactsApp.UI';
 
-  constructor() {
-    
+  isLogin: WritableSignal<boolean>;
+
+  constructor(private sharedSignalService: SharedSignalService) {
+    this.isLogin = this.sharedSignalService.getLogin();
   }
 }

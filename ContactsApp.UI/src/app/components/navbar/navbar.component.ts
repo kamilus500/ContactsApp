@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { TokenService } from '../../services/tokenService';
 import { Router } from '@angular/router';
+import { SharedSignalService } from '../../services/sharedSignalService';
 
 @Component({
   selector: 'app-navbar',
@@ -9,13 +10,16 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent {
 
-  constructor(private tokenService: TokenService, private router: Router) {
+  constructor(private tokenService: TokenService, 
+    private router: Router,
+    private sharedSignalService: SharedSignalService
+  ) {
 
   }
 
   logout(): void {
     this.tokenService.removeToken();
-
+    this.sharedSignalService.setLogin(false);
     this.router.navigateByUrl('/');
   }
 
