@@ -23,11 +23,11 @@ namespace ContactsApp.Application.Contact.Queries.GetAllContacts
 
         public async Task<IEnumerable<ContactDto>> Handle(GetAllContactsQuery request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"GetAllContactsQuery handler {request.UserId} handler execute");
+           _logger.LogInformation($"GetAllContactsQuerys handler execute");
 
             if (!_memoryCache.TryGetValue(CacheItemKeys.allContactsCacheKey, out IEnumerable<ContactDto> contactDtos))
             {
-                var contacts = await _contactsRepository.GetContacts(request.UserId, cancellationToken);
+                var contacts = await _contactsRepository.GetContacts( cancellationToken);
 
                 contactDtos = contacts.Adapt<IEnumerable<ContactDto>>();
 

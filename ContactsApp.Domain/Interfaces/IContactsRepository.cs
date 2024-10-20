@@ -4,7 +4,7 @@ namespace ContactsApp.Domain.Interfaces
 {
     public interface IContactsRepository
     {
-        Task<IEnumerable<Contact>> GetContacts(string userId, CancellationToken cancellationToken);
+        Task<IEnumerable<Contact>> GetContacts(CancellationToken cancellationToken);
 
         Task<Contact> GetContactById(string contactId, CancellationToken cancellationToken);
 
