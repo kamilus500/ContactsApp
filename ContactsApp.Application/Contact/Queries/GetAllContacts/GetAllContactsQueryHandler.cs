@@ -23,7 +23,7 @@ namespace ContactsApp.Application.Contact.Queries.GetAllContacts
 
         public async Task<IEnumerable<ContactDto>> Handle(GetAllContactsQuery request, CancellationToken cancellationToken)
         {
-           _logger.LogInformation($"GetAllContactsQuerys handler execute");
+           _logger.LogInformation($"GetAllContactsQuerys handler execute {DateTime.UtcNow}");
 
             if (!_memoryCache.TryGetValue(CacheItemKeys.allContactsCacheKey, out IEnumerable<ContactDto> contactDtos))
             {

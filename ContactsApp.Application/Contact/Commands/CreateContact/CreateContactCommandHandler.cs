@@ -3,6 +3,7 @@ using ContactsApp.Domain.Interfaces;
 using Mapster;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Logging;
 
 namespace ContactsApp.Application.Contact.Commands.CreateContact
 {
@@ -10,15 +11,19 @@ namespace ContactsApp.Application.Contact.Commands.CreateContact
     {
         private readonly IContactsRepository _contactsRepository;
         private readonly IMemoryCache _memoryCache;
+        private ILogger<CreateContactCommandHandler> _logger;
         
-        public CreateContactCommandHandler(IContactsRepository contactsRepository, IMemoryCache memoryCache)
+        public CreateContactCommandHandler(IContactsRepository contactsRepository, IMemoryCache memoryCache, ILogger<CreateContactCommandHandler> logger)
         {
             _contactsRepository = contactsRepository ?? throw new ArgumentNullException(nameof(contactsRepository));
             _memoryCache = memoryCache ?? throw new ArgumentNullException(nameof(memoryCache));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<Domain.Entities.Contact> Handle(CreateContactCommand request, CancellationToken cancellationToken)
         {
+            _logger.LogInformation($"CreateContactCommandHandler handler execute {DateTime.UtcNow}");
+
             var newContact = request.Adapt<Domain.Entities.Contact>();
             newContact.Id = Guid.NewGuid().ToString();
             await _contactsRepository.CreateContact(newContact, cancellationToken);
