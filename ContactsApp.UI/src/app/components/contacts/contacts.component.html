@@ -1,14 +1,21 @@
-<div class="contact-container p-justify-center">
-    <div *ngFor="let contact of contacts">
-        <p-card class="contact-card">
+<div class="contact-container">
+    <div *ngFor="let contact of contacts"  class="contact-card">
+        <p-card>
             <ng-template pTemplate="header">
-                <p-avatar image="https://www.gravatar.com/avatar?d=mp" size="large" shape="circle" class="p-mr-2"></p-avatar>
+                <p-avatar image="https://www.gravatar.com/avatar?d=mp" size="large" shape="circle" class="p-mr-2 avatar-image"></p-avatar>
                 <span>{{ contact.firstName }} {{ contact.lastName }}</span>
             </ng-template>
             <div class="p-card-content">
                 <p><strong>Email:</strong> {{ contact.email }}</p>
                 <p><strong>Phone:</strong> {{ contact.numberPhone }}</p>
             </div>
+            <ng-template pTemplate="footer">
+                <div class="flex gap-3 mt-1">
+                    <p-button label="Remove" severity="danger" />
+                    <p-button label="Edit" />
+                    <p-button label="Edit" />
+                </div>
+            </ng-template>
         </p-card>
     </div>
 </div>

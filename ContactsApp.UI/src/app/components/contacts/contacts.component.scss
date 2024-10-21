@@ -1,8 +1,15 @@
-.contact-card {
-    text-align: center;
+.contact-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+    margin: 2rem 1rem;
+}
 
-    .p-card-content {
-        padding-top: 0.5rem;
+.contact-card {
+    width: 17rem;
+
+    .avatar-image {
+        margin-right: 1rem;
     }
 
     span {
@@ -11,17 +18,19 @@
     }
 }
 
+@media (max-width: 768px) {
+    .contact-card {
+        width: 23rem;
+        margin: 0 auto;
+    }
+}
+
 :host ::ng-deep .p-card-header {
     display: flex;
     justify-content: center;
     align-items: center;
-    
 }
 
 :host ::ng-deep .p-card-body .p-card-content {
     padding: 0;
-}
-
-.contact-container {
-    width: 25rem;
 }

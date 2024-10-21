@@ -20,6 +20,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { ContactService } from './services/contactService';
 import { AuthInterceptor } from './interceptors/authInterceptor';
 import { SharedSignalService } from './services/sharedSignalService';
+import { TabViewModule } from 'primeng/tabview';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { SharedSignalService } from './services/sharedSignalService';
     InputTextModule,
     CardModule,
     HttpClientModule,
-    AvatarModule
+    AvatarModule,
+    TabViewModule
   ],
   providers: [TokenService, ContactService, AuthService, SharedSignalService, {
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
