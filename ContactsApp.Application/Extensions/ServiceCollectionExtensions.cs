@@ -1,5 +1,8 @@
-﻿using ContactsApp.Application.Mapper;
+﻿using ContactsApp.Application.Contact.Commands.CreateContact;
+using ContactsApp.Application.Mapper;
 using ContactsApp.Application.Middlewares;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Mapster;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -16,6 +19,11 @@ namespace ContactsApp.Application.Extensions
             MapsterConfig.Configure();
 
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
+
+            services.AddValidatorsFromAssemblyContaining<CreateContactCommandValidator>()
+                .AddFluentValidationAutoValidation()
+                .AddFluentValidationClientsideAdapters();
+                               
         }
 
         public static void AddMiddlewares(this IApplicationBuilder app, IWebHostEnvironment env)
