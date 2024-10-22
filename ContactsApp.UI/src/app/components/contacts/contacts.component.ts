@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ContactService } from '../../services/contactService';
 import { ContactDto } from '../../models/contactDto';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-contacts',
@@ -12,8 +12,9 @@ export class ContactsComponent implements OnInit{
 
   contacts: ContactDto[] = [];
   userId: string | null = null;
+  searchValue: string | null = null;
 
-  constructor(private contactService: ContactService, private messageService: MessageService, private confirmationService: ConfirmationService) {
+  constructor(private contactService: ContactService, private confirmationService: ConfirmationService) {
 
   }
 
@@ -35,9 +36,7 @@ export class ContactsComponent implements OnInit{
         rejectButtonStyleClass:"p-button-text",
         accept: () => {
           this.contactService.delete(contactId)
-            .subscribe(x => {
-              this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Removed sucessfully' });
-      
+            .subscribe(x => {      
               this.contactService.getAll()
                 .subscribe(contacts => this.contacts = contacts);
             });

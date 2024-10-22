@@ -9,7 +9,6 @@ import { SharedSignalService } from '../../services/sharedSignalService';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
-
   constructor(private tokenService: TokenService, 
     private router: Router,
     private sharedSignalService: SharedSignalService

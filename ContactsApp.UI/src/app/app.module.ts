@@ -9,7 +9,7 @@ import { AuthComponent } from './components/auth/auth.component';
 import { TokenService } from './services/tokenService';
 import { ContactsComponent } from './components/contacts/contacts.component';
 import { MessageModule } from 'primeng/message';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
@@ -25,6 +25,7 @@ import { ToastModule } from 'primeng/toast';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +41,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     MessageModule,
     ReactiveFormsModule,
+    FormsModule,
     ButtonModule,
     InputTextModule,
     CardModule,
