@@ -21,7 +21,10 @@ import { ContactService } from './services/contactService';
 import { AuthInterceptor } from './interceptors/authInterceptor';
 import { SharedSignalService } from './services/sharedSignalService';
 import { TabViewModule } from 'primeng/tabview';
-
+import { ToastModule } from 'primeng/toast';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,6 +35,7 @@ import { TabViewModule } from 'primeng/tabview';
     NavbarComponent
   ],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
     MessageModule,
@@ -41,10 +45,12 @@ import { TabViewModule } from 'primeng/tabview';
     CardModule,
     HttpClientModule,
     AvatarModule,
-    TabViewModule
+    TabViewModule,
+    ToastModule,
+    ConfirmDialogModule
   ],
-  providers: [TokenService, ContactService, AuthService, SharedSignalService, {
-    provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
+  providers: [TokenService, ContactService, AuthService, SharedSignalService, MessageService, ConfirmationService, {
+    provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true,
   }],
   bootstrap: [AppComponent]
 })

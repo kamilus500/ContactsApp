@@ -10,12 +10,13 @@
                 <p><strong>Phone:</strong> {{ contact.numberPhone }}</p>
             </div>
             <ng-template pTemplate="footer">
-                <div class="flex gap-3 mt-1">
-                    <p-button label="Remove" severity="danger" />
-                    <p-button label="Edit" />
-                    <p-button label="Edit" />
+                <div class="contact-buttons">
+                    <p-button (click)="delete($event, contact.id)" icon="pi pi-trash"/>
+                    <p-button icon="pi pi-user-edit" />
                 </div>
             </ng-template>
         </p-card>
     </div>
 </div>
+<p-toast />
+<p-confirmDialog />

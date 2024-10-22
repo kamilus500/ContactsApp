@@ -25,6 +25,12 @@
     }
 }
 
+.contact-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
 :host ::ng-deep .p-card-header {
     display: flex;
     justify-content: center;

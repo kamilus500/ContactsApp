@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ContactService } from '../../services/contactService';
 import { ContactDto } from '../../models/contactDto';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-contacts',
@@ -12,7 +13,7 @@ export class ContactsComponent implements OnInit{
   contacts: ContactDto[] = [];
   userId: string | null = null;
 
-  constructor(private contactService: ContactService) {
+  constructor(private contactService: ContactService, private messageService: MessageService, private confirmationService: ConfirmationService) {
 
   }
 
@@ -21,6 +22,27 @@ export class ContactsComponent implements OnInit{
       .subscribe(contacts => {
         this.contacts = contacts;
       });
+  }
+
+  delete(event: Event, contactId: string) {
+    this.confirmationService.confirm({
+        target: event.target as EventTarget,
+        message: 'Are you sure to remove this contact',
+        header: 'Confirmation',
+        icon: 'pi pi-exclamation-triangle',
+        acceptIcon:"none",
+        rejectIcon:"none",
+        rejectButtonStyleClass:"p-button-text",
+        accept: () => {
+          this.contactService.delete(contactId)
+            .subscribe(x => {
+              this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Removed sucessfully' });
+      
+              this.contactService.getAll()
+                .subscribe(contacts => this.contacts = contacts);
+            });
+        }
+    });
   }
 
 }

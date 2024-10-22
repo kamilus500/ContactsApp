@@ -23,8 +23,8 @@ export class ContactService {
         return this.httpClient.post<string>(`${this.API_URL}/CreateContact`, newContact);
     }
 
-    delete(contactId: string): void {
-        this.httpClient.delete(`${this.API_URL}/DeleteContact/${contactId}`);
+    delete(contactId: string): Observable<void> {
+        return this.httpClient.delete<void>(`${this.API_URL}/DeleteContact/${contactId}`);
     }
 
     update(updatedContactDto: ContactDto): Observable<ContactDto> {
