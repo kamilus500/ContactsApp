@@ -1,20 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { ContactService } from '../../services/contactService';
 import { ContactDto } from '../../models/contactDto';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { AddContactComponent } from '../add-contact/add-contact.component';
 
 @Component({
   selector: 'app-contacts',
   templateUrl: './contacts.component.html',
   styleUrl: './contacts.component.scss'
 })
-export class ContactsComponent implements OnInit{
-
+export class ContactsComponent implements OnInit {
+  ref: DynamicDialogRef | undefined;
   contacts: ContactDto[] = [];
   userId: string | null = null;
   searchValue: string | null = null;
 
-  constructor(private contactService: ContactService, private confirmationService: ConfirmationService) {
+  constructor(private contactService: ContactService, private confirmationService: ConfirmationService, public dialogService: DialogService, private messageService: MessageService) {
 
   }
 
@@ -23,6 +25,15 @@ export class ContactsComponent implements OnInit{
       .subscribe(contacts => {
         this.contacts = contacts;
       });
+  }
+
+
+  show() {
+    this.ref = this.dialogService.open(AddContactComponent, {
+        header: 'Create contact',
+        modal: true,
+        contentStyle: { overflow: 'auto' },
+    });
   }
 
   delete(event: Event, contactId: string) {
@@ -43,5 +54,4 @@ export class ContactsComponent implements OnInit{
         }
     });
   }
-
 }

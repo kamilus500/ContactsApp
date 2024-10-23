@@ -25,6 +25,8 @@ import { ToastModule } from 'primeng/toast';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DialogService } from 'primeng/dynamicdialog';
+import { AddContactComponent } from './components/add-contact/add-contact.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     RegisterComponent,
     AuthComponent,
     ContactsComponent,
-    NavbarComponent
+    NavbarComponent,
+    AddContactComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -51,7 +54,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ToastModule,
     ConfirmDialogModule
   ],
-  providers: [TokenService, ContactService, AuthService, SharedSignalService, MessageService, ConfirmationService, {
+  providers: [TokenService, ContactService, AuthService, SharedSignalService, MessageService, ConfirmationService, DialogService ,{
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true,
   }],
   bootstrap: [AppComponent]

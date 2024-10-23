@@ -5,7 +5,7 @@ import { AuthGuard } from './guards/authGuard';
 import { ContactsComponent } from './components/contacts/contacts.component';
 
 const routes: Routes = [
-  { path: 'auth', component: AuthComponent}, 
+  { path: 'auth', component: AuthComponent }, 
   { path: 'contacts', component: ContactsComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: 'auth', pathMatch: 'full' },
   { path: '**', redirectTo: 'auth' }

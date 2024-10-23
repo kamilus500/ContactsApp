@@ -1,0 +1,35 @@
+<form [formGroup]="createContactForm" (ngSubmit)="onSubmit()">
+    <div class="p-field p-fluid">
+        <label for="firstName">First name</label>
+        <input id="firstName" pInputText formControlName="firstName" placeholder="Enter first name" />
+        @if(createContactForm.get('firstName')?.invalid && createContactForm.get('firstName')?.touched) {
+            <p-message severity="error" text="Invalid first name"></p-message>
+        }
+    </div>
+    <div class="p-field p-fluid">
+        <label for="lastName">Last name</label>
+        <input id="lastName" pInputText formControlName="lastName" placeholder="Enter lastName" />
+        @if (createContactForm.get('lastName')?.invalid && createContactForm.get('lastName')?.touched) {
+            <p-message severity="error" text="Last name is required"></p-message>
+        }
+    </div>
+    <div class="p-field p-fluid">
+        <label for="email">Email</label>
+        <input id="email" pInputText formControlName="email" placeholder="Enter email" />
+        @if (createContactForm.get('email')?.invalid && createContactForm.get('email')?.touched) {
+            <p-message severity="error" text="Email is required"></p-message>
+        }
+    </div>
+    <div class="p-field p-fluid">
+        <label for="numberPhone">Number phone</label>
+        <input id="numberPhone" pInputText formControlName="numberPhone" placeholder="Enter number phone" />
+        @if (createContactForm.get('numberPhone')?.invalid && createContactForm.get('numberPhone')?.touched) {
+            <p-message severity="error" text="Number phone is required"></p-message>
+        }
+    </div>
+    <input type="hidden" id="id" formControlName="id" value="" />
+    <input type="hidden" id="userId" formControlName="userId" value=""/>
+    <div class="create-button">
+        <button pButton label="Create" type="submit" class="p-button-success" [disabled]="createContactForm.invalid"></button>
+    </div>
+</form>
