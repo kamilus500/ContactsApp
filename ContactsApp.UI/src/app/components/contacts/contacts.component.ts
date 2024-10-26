@@ -27,11 +27,6 @@ export class ContactsComponent implements OnInit {
 
   ngOnInit(): void {
     this.contactService.getAll()
-      .subscribe(contacts => {
-        this.contacts = contacts;
-      });
-
-    this.contactService.getAll()
       .subscribe({
         next: (response: ContactDto[]) => {
           this.contacts = response;
@@ -42,6 +37,24 @@ export class ContactsComponent implements OnInit {
       });
   }
 
+  search(): void {
+    if (this.searchValue !== '') {
+      this.contacts = this.contacts
+                        .filter(c => c.firstName.toLocaleLowerCase().includes(this.searchValue!.toLocaleLowerCase()) ||
+                                     c.lastName.toLocaleLowerCase().includes(this.searchValue!.toLocaleLowerCase()) ||
+                                     c.email.toLocaleLowerCase().includes(this.searchValue!.toLocaleLowerCase()))
+    } else {
+      this.contactService.getAll()
+        .subscribe({
+          next: (response: ContactDto[]) => {
+            this.contacts = response;
+          },
+          error: (error) => {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Something went wrong' });
+          }
+        })
+    }
+  }
 
   show() {
     this.ref = this.dialogService.open(AddContactComponent, {
