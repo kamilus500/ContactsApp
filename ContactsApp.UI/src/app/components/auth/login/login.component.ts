@@ -5,9 +5,7 @@ import { AuthService } from '../../../services/authService';
 import { TokenService } from '../../../services/tokenService';
 import { Router } from '@angular/router';
 import { SharedSignalService } from '../../../services/sharedSignalService';
-import { jwtDecode } from 'jwt-decode';
-import { UserService } from '../../../services/userService';
-import { CurrentUser } from '../../../models/currentUser';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-login',
@@ -21,8 +19,8 @@ export class LoginComponent {
     private tokenService: TokenService,
     private authService: AuthService,
     private sharedSignalService: SharedSignalService,
-    private userService: UserService,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -34,21 +32,23 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       let loginDto = this.loginForm.value as LoginRegisterDto;
 
-      this.authService.login(loginDto).subscribe(response => {
-        if (response.accessToken !== '') {
-          this.tokenService.saveToken(response.accessToken);
-          this.sharedSignalService.setLogin(true);
-          
-          this.userService.getUserFullName()
-            .subscribe((x: CurrentUser) => {
-              if (x.email) {
-                this.sharedSignalService.setUserEmail(x.email);
-              }
-            })
-
-          this.router.navigateByUrl('/contacts');
-        }
-      })
+      this.authService.login(loginDto)
+        .subscribe({
+          next: (response) => {
+              this.tokenService.saveToken(response.accessToken);
+              this.sharedSignalService.setLogin(true);
+              this.sharedSignalService.setUserEmail(loginDto.email);              
+    
+              this.router.navigateByUrl('/contacts');
+          },
+          error: (error) => {
+            if (error.status === 401) {
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Login or password is not correct' });
+            } else {
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Something went wrong' });
+            }
+          }
+        })
     }
   }
 }

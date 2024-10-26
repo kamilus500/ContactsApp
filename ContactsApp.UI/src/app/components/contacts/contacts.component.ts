@@ -17,7 +17,11 @@ export class ContactsComponent implements OnInit {
   searchValue: string | null = null;
 
 
-  constructor(private contactService: ContactService, private confirmationService: ConfirmationService, public dialogService: DialogService) {
+  constructor(private contactService: ContactService, 
+    private confirmationService: ConfirmationService, 
+    public dialogService: DialogService,
+    private messageService: MessageService
+  ) {
 
   }
 
@@ -25,6 +29,16 @@ export class ContactsComponent implements OnInit {
     this.contactService.getAll()
       .subscribe(contacts => {
         this.contacts = contacts;
+      });
+
+    this.contactService.getAll()
+      .subscribe({
+        next: (response: ContactDto[]) => {
+          this.contacts = response;
+        },
+        error: (error) => {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Something went wrong' });
+        }
       });
   }
 
@@ -52,6 +66,25 @@ export class ContactsComponent implements OnInit {
               this.contactService.getAll()
                 .subscribe(contacts => this.contacts = contacts);
             });
+
+          this.contactService.delete(contactId)
+           .subscribe({
+               next: () => {
+                this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Deleted successfully' });
+                this.contactService.getAll()
+                  .subscribe({
+                    next: (response: ContactDto[]) => {
+                      this.contacts = response;
+                    },
+                    error: (error) => {
+                      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Something went wrong' });
+                    }
+                  });
+              },
+              error: (error) => {
+                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Something went wrong' });
+              }
+            })
         }
     });
   }

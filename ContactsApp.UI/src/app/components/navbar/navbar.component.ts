@@ -22,6 +22,7 @@ export class NavbarComponent {
   logout(): void {
     this.tokenService.removeToken();
     this.sharedSignalService.setLogin(false);
+    this.sharedSignalService.setUserEmail('');
     this.router.navigateByUrl('/');
   }
 

@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { LoginRegisterDto } from '../../../models/loginRegisterDto';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/authService';
+import { MessageService } from 'primeng/api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -11,7 +13,7 @@ import { AuthService } from '../../../services/authService';
 export class RegisterComponent {
   registerForm: FormGroup;
   
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private messageService: MessageService, private router: Router) {
     this.registerForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -34,7 +36,16 @@ export class RegisterComponent {
       };
       
       this.authService.register(registerDto)
-        .subscribe();
+        .subscribe({
+          next: (response) => {
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Registered successfully' });
+            this.router.navigateByUrl('auth');
+          },
+          error: (error) => {
+            console.log(error);
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Something went wrong' });
+          }
+        });
     }
   }
 }
