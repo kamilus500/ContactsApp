@@ -6,6 +6,7 @@ import { TokenService } from '../../../services/tokenService';
 import { Router } from '@angular/router';
 import { SharedSignalService } from '../../../services/sharedSignalService';
 import { MessageService } from 'primeng/api';
+import { LocalStorageService } from '../../../services/localStorageService';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +20,7 @@ export class LoginComponent {
     private tokenService: TokenService,
     private authService: AuthService,
     private sharedSignalService: SharedSignalService,
+    private localStorageService: LocalStorageService,
     private router: Router,
     private messageService: MessageService
   ) {
@@ -36,9 +38,9 @@ export class LoginComponent {
         .subscribe({
           next: (response) => {
               this.tokenService.saveToken(response.accessToken);
+              this.localStorageService.set(loginDto.email, 'email');
               this.sharedSignalService.setLogin(true);
-              this.sharedSignalService.setUserEmail(loginDto.email);              
-    
+              this.sharedSignalService.setUserEmail(loginDto.email);
               this.router.navigateByUrl('/contacts');
           },
           error: (error) => {
