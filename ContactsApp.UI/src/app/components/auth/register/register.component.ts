@@ -25,7 +25,13 @@ export class RegisterComponent {
 
   onSubmit(): void {
     if (this.registerForm.valid) {
-      let registerDto: LoginRegisterDto = this.registerForm.value;
+      let email = this.registerForm.get('email')?.value;
+      let password = this.registerForm.get('password')?.value;
+
+      let registerDto: LoginRegisterDto = {
+        email: email,
+        password: password
+      };
       
       this.authService.register(registerDto)
         .subscribe();

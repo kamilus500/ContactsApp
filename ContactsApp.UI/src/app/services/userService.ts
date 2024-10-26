@@ -1,29 +1,18 @@
-import { Injectable } from "@angular/core";
-import { TokenService } from "./tokenService";
-import { jwtDecode } from "jwt-decode";
+import { inject, Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { CurrentUser } from "../models/currentUser";
 
 @Injectable({
     providedIn: 'root'
 })
   
 export class UserService {
+    private API_URL : string = 'https://localhost:7239';
+    private httpClient: HttpClient = inject(HttpClient);
 
-    constructor(private tokenService: TokenService) {
-
-    }
-
-    getUserId(): string | null {
-        let decryptedToken = this.tokenService.getToken();
-
-        if (decryptedToken === null || decryptedToken === undefined) {
-            return null;
-        }
-
-        let decodedToken = jwtDecode(decryptedToken);
-
-        console.log(decodedToken);
-
-        return decodedToken.sub as string | null;
+    getUserFullName(): Observable<CurrentUser> {
+        return this.httpClient.get<CurrentUser>(`${this.API_URL}/getUser`);
     }
 }
   

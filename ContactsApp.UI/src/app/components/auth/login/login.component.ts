@@ -5,6 +5,9 @@ import { AuthService } from '../../../services/authService';
 import { TokenService } from '../../../services/tokenService';
 import { Router } from '@angular/router';
 import { SharedSignalService } from '../../../services/sharedSignalService';
+import { jwtDecode } from 'jwt-decode';
+import { UserService } from '../../../services/userService';
+import { CurrentUser } from '../../../models/currentUser';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +21,7 @@ export class LoginComponent {
     private tokenService: TokenService,
     private authService: AuthService,
     private sharedSignalService: SharedSignalService,
+    private userService: UserService,
     private router: Router
   ) {
     this.loginForm = this.fb.group({
@@ -34,6 +38,14 @@ export class LoginComponent {
         if (response.accessToken !== '') {
           this.tokenService.saveToken(response.accessToken);
           this.sharedSignalService.setLogin(true);
+          
+          this.userService.getUserFullName()
+            .subscribe((x: CurrentUser) => {
+              if (x.email) {
+                this.sharedSignalService.setUserEmail(x.email);
+              }
+            })
+
           this.router.navigateByUrl('/contacts');
         }
       })

@@ -45,6 +45,7 @@ namespace ContactsApp.Infrastructure.Extensions
 
             services.AddIdentityCore<User>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddClaimsPrincipalFactory<AppClaimsFactory>()
                 .AddApiEndpoints();
 
             services.AddMemoryCache();

@@ -16,7 +16,8 @@ export class ContactsComponent implements OnInit {
   userId: string | null = null;
   searchValue: string | null = null;
 
-  constructor(private contactService: ContactService, private confirmationService: ConfirmationService, public dialogService: DialogService, private messageService: MessageService) {
+
+  constructor(private contactService: ContactService, private confirmationService: ConfirmationService, public dialogService: DialogService) {
 
   }
 

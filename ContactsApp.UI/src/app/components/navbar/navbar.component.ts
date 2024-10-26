@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, WritableSignal } from '@angular/core';
 import { TokenService } from '../../services/tokenService';
 import { Router } from '@angular/router';
 import { SharedSignalService } from '../../services/sharedSignalService';
@@ -9,11 +9,14 @@ import { SharedSignalService } from '../../services/sharedSignalService';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
+
+  @Input() userEmail: string = '';
+
   constructor(private tokenService: TokenService, 
     private router: Router,
     private sharedSignalService: SharedSignalService
   ) {
-
+    
   }
 
   logout(): void {
