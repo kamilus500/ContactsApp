@@ -75,12 +75,6 @@ export class ContactsComponent implements OnInit {
         rejectButtonStyleClass:"p-button-text",
         accept: () => {
           this.contactService.delete(contactId)
-            .subscribe(x => {      
-              this.contactService.getAll()
-                .subscribe(contacts => this.contacts = contacts);
-            });
-
-          this.contactService.delete(contactId)
            .subscribe({
                next: () => {
                 this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Deleted successfully' });
