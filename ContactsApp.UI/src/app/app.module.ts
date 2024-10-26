@@ -27,6 +27,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogService } from 'primeng/dynamicdialog';
 import { AddContactComponent } from './components/add-contact/add-contact.component';
+import { LocalStorageService } from './services/localStorageService';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,7 @@ import { AddContactComponent } from './components/add-contact/add-contact.compon
     ToastModule,
     ConfirmDialogModule
   ],
-  providers: [TokenService, ContactService, AuthService, SharedSignalService, MessageService, ConfirmationService, DialogService ,{
+  providers: [TokenService, ContactService, AuthService, SharedSignalService, MessageService, ConfirmationService, DialogService, LocalStorageService ,{
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true,
   }],
   bootstrap: [AppComponent]
