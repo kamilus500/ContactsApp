@@ -2,7 +2,6 @@ import { Component, Input, OnInit, signal, WritableSignal } from '@angular/core'
 import { TokenService } from '../../services/tokenService';
 import { Router } from '@angular/router';
 import { SharedSignalService } from '../../services/sharedSignalService';
-import { LocalStorageService } from '../../services/localStorageService';
 
 @Component({
   selector: 'app-navbar',

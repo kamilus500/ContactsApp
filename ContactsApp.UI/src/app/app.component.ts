@@ -20,7 +20,7 @@ export class AppComponent {
       let email = this.localStorageService.get('email')
       this.sharedSignalService.setUserEmail(email);
     }
-    
+
     this.isLogin = this.sharedSignalService.getLogin();
   }
 }

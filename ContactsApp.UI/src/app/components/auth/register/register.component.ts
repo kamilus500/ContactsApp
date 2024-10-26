@@ -42,7 +42,6 @@ export class RegisterComponent {
             this.router.navigateByUrl('auth');
           },
           error: (error) => {
-            console.log(error);
             this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Something went wrong' });
           }
         });
