@@ -28,6 +28,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { AddContactComponent } from './components/add-contact/add-contact.component';
 import { LocalStorageService } from './services/localStorageService';
 import { FilterService } from 'primeng/api';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { FilterService } from 'primeng/api';
     AuthComponent,
     ContactsComponent,
     NavbarComponent,
-    AddContactComponent
+    AddContactComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserAnimationsModule,

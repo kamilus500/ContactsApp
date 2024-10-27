@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 import { ContactDto } from "../models/contactDto";
+import { LoadingService } from "./loadingService";
 
 @Injectable({
     providedIn: 'root'
@@ -14,36 +15,66 @@ export class ContactService {
     public contacts$: BehaviorSubject<ContactDto[]> = new BehaviorSubject<ContactDto[]>([]);
     public contact$: Observable<ContactDto> = new Observable<ContactDto>();
 
-    loadContacts(): void {
-        this.getAll().subscribe(
-            contacts => this.contacts$.next(contacts),
-            error => console.log('Error when loading contacts', error)
-        )
+    constructor(private loadingService: LoadingService) {
+
     }
-    
+
+    loadContacts(): void {
+        this.getAll()
+            .subscribe({
+                next: (contacts) => {
+                    this.contacts$.next(contacts)
+                },
+                error: (error) => {
+                    console.log('Error when loading contacts', error)
+                }
+            })
+    }
+
     loadContactById(contactId: string): void {
         this.contact$ = this.getById(contactId);
     }
 
     createContact(newContact: ContactDto): void{
         this.create(newContact)
-            .subscribe(() => {
-                this.loadContacts();
+            .subscribe({
+                next: () => {
+                    this.loadingService.show();
+                    this.loadContacts();
+                    this.loadingService.hide();
+                },
+                error: (error) => {
+                    console.log('Error when adding contacts', error)
+                }
             });
     }
 
     deleteContact(contactId: string): void{
         this.delete(contactId)
-            .subscribe(() => {
-                this.loadContacts();
-            });
+            .subscribe({
+                next: () => {
+                    this.loadingService.show();
+                    this.loadContacts();
+                    this.loadingService.hide();
+                },
+                error: (error) => {
+                    console.log('Error when deleting contact');
+                }
+            })
     }
 
     updateContact(updatedContactDto: ContactDto): void {
         this.update(updatedContactDto)
-            .subscribe(() => {
-                this.loadContacts();
-            });
+            .subscribe({
+                next: () => {
+                    this.loadingService.show();
+                    this.loadContacts();
+                    this.loadingService.hide();
+                },
+                error: () => {
+                    console.log('Error when updating contact');
+                }
+            })
     }
 
     private getAll() : Observable<ContactDto[]> {

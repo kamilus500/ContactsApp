@@ -6,6 +6,7 @@ import { TokenService } from '../../../services/tokenService';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { LocalStorageService } from '../../../services/localStorageService';
+import { LoadingService } from '../../../services/loadingService';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ export class LoginComponent {
     private authService: AuthService,
     private localStorageService: LocalStorageService,
     private router: Router,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private loadingService: LoadingService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -30,6 +32,8 @@ export class LoginComponent {
 
   onSubmit() : void {
     if (this.loginForm.valid) {
+      this.loadingService.show();
+
       let loginDto = this.loginForm.value as LoginRegisterDto;
 
       this.authService.login(loginDto)
@@ -39,6 +43,8 @@ export class LoginComponent {
               this.localStorageService.set(loginDto.email, 'email');
               this.authService.setIsLogin(true);
               this.authService.setUserEmail(loginDto.email);
+
+              this.loadingService.hide();
               this.router.navigateByUrl('/contacts');
           },
           error: (error) => {
