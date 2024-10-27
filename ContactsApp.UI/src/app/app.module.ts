@@ -19,7 +19,6 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { AvatarModule } from 'primeng/avatar';
 import { ContactService } from './services/contactService';
 import { AuthInterceptor } from './interceptors/authInterceptor';
-import { SharedSignalService } from './services/sharedSignalService';
 import { TabViewModule } from 'primeng/tabview';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -56,7 +55,7 @@ import { FilterService } from 'primeng/api';
     ToastModule,
     ConfirmDialogModule
   ],
-  providers: [TokenService, ContactService, AuthService, SharedSignalService, MessageService, ConfirmationService, DialogService, LocalStorageService, FilterService, {
+  providers: [TokenService, ContactService, AuthService, MessageService, ConfirmationService, DialogService, LocalStorageService, FilterService, {
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true,
   }],
   bootstrap: [AppComponent]

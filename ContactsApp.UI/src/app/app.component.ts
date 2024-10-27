@@ -1,7 +1,8 @@
-import { Component, signal, WritableSignal } from '@angular/core';
+import { Component } from '@angular/core';
 import { TokenService } from './services/tokenService';
-import { SharedSignalService } from './services/sharedSignalService';
 import { LocalStorageService } from './services/localStorageService';
+import { Observable } from 'rxjs';
+import { AuthService } from './services/authService';
 
 @Component({
   selector: 'app-root',
@@ -11,16 +12,15 @@ import { LocalStorageService } from './services/localStorageService';
 export class AppComponent {
   title = 'ContactsApp.UI';
 
-  isLogin: WritableSignal<boolean>;
+  isLogin$: Observable<boolean>
 
-  constructor(private tokenService: TokenService, private sharedSignalService: SharedSignalService, private localStorageService: LocalStorageService) {
+  constructor(private tokenService: TokenService, private localStorageService: LocalStorageService, private authService: AuthService) {
+    this.isLogin$ = this.authService.isLogin$;
+
     if (this.tokenService.hasToken()) {
-      this.sharedSignalService.setLogin(true);
-
+      this.authService.setIsLogin(true);
       let email = this.localStorageService.get('email')
-      this.sharedSignalService.setUserEmail(email);
+      this.authService.setUserEmail(email);
     }
-
-    this.isLogin = this.sharedSignalService.getLogin();
   }
 }

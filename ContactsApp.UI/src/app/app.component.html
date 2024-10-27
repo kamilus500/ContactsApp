@@ -1,4 +1,4 @@
-@if (isLogin()) {
+@if (isLogin$ | async) {
     <app-navbar></app-navbar>
 }
 <router-outlet></router-outlet>

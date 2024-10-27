@@ -1,7 +1,9 @@
-import { Component, Input, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { TokenService } from '../../services/tokenService';
 import { Router } from '@angular/router';
-import { SharedSignalService } from '../../services/sharedSignalService';
+import { AuthService } from '../../services/authService';
+import { BehaviorSubject } from 'rxjs';
+import { LocalStorageService } from '../../services/localStorageService';
 
 @Component({
   selector: 'app-navbar',
@@ -10,22 +12,24 @@ import { SharedSignalService } from '../../services/sharedSignalService';
 })
 export class NavbarComponent implements OnInit {
 
-  userEmail: WritableSignal<string> = signal('');
+  userEmail$: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
-  constructor(private tokenService: TokenService, 
+  constructor(private tokenService: TokenService,
+    private localStorageService: LocalStorageService,
     private router: Router,
-    private sharedSignalService: SharedSignalService,
+    private authService: AuthService,
   ) {
     
   }
   ngOnInit(): void {
-    this.userEmail = this.sharedSignalService.getUserEmail();
+    this.userEmail$ = this.authService.userEmail$;
   }
 
   logout(): void {
+    this.localStorageService.remove('email');
     this.tokenService.removeToken();
-    this.sharedSignalService.setLogin(false);
-    this.sharedSignalService.setUserEmail('');
+    this.authService.setIsLogin(false);
+    this.authService.setUserEmail('');
     this.router.navigateByUrl('/');
   }
 

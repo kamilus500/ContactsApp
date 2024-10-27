@@ -4,7 +4,6 @@ import { LoginRegisterDto } from '../../../models/loginRegisterDto';
 import { AuthService } from '../../../services/authService';
 import { TokenService } from '../../../services/tokenService';
 import { Router } from '@angular/router';
-import { SharedSignalService } from '../../../services/sharedSignalService';
 import { MessageService } from 'primeng/api';
 import { LocalStorageService } from '../../../services/localStorageService';
 
@@ -19,7 +18,6 @@ export class LoginComponent {
   constructor(private fb: FormBuilder, 
     private tokenService: TokenService,
     private authService: AuthService,
-    private sharedSignalService: SharedSignalService,
     private localStorageService: LocalStorageService,
     private router: Router,
     private messageService: MessageService
@@ -39,8 +37,8 @@ export class LoginComponent {
           next: (response) => {
               this.tokenService.saveToken(response.accessToken);
               this.localStorageService.set(loginDto.email, 'email');
-              this.sharedSignalService.setLogin(true);
-              this.sharedSignalService.setUserEmail(loginDto.email);
+              this.authService.setIsLogin(true);
+              this.authService.setUserEmail(loginDto.email);
               this.router.navigateByUrl('/contacts');
           },
           error: (error) => {
