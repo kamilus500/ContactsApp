@@ -5,6 +5,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AddContactComponent } from '../add-contact/add-contact.component';
 import { filter, map, Observable } from 'rxjs';
+import { EditContactComponent } from '../edit-contact/edit-contact.component';
 
 @Component({
   selector: 'app-contacts',
@@ -30,7 +31,7 @@ export class ContactsComponent implements OnInit {
   }
 
   search(): void {
-    if (this.searchValue !== '') {
+    if (this.searchValue !== null) {
       this.contacts$ = this.contacts$
                             .pipe(
                               map(c => 
@@ -45,12 +46,23 @@ export class ContactsComponent implements OnInit {
     }
   }
 
-  show() {
-    this.ref = this.dialogService.open(AddContactComponent, {
+  show(formName: string, contactId: string) {
+    if (formName === 'Add') {
+      this.ref = this.dialogService.open(AddContactComponent, {
         header: 'Create contact',
         modal: true,
         contentStyle: { overflow: 'auto' },
-    });
+      });
+    } else {
+
+      this.contactService.loadContactById(contactId);
+
+      this.ref = this.dialogService.open(EditContactComponent, {
+        header: 'Update contact',
+        modal: true,
+        contentStyle: { overflow: 'auto' },
+      });
+    }
   }
 
   delete(event: Event, contactId: string) {

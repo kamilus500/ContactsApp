@@ -29,6 +29,7 @@ import { AddContactComponent } from './components/add-contact/add-contact.compon
 import { LocalStorageService } from './services/localStorageService';
 import { FilterService } from 'primeng/api';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
+import { EditContactComponent } from './components/edit-contact/edit-contact.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
     ContactsComponent,
     NavbarComponent,
     AddContactComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    EditContactComponent
   ],
   imports: [
     BrowserAnimationsModule,

@@ -1,5 +1,5 @@
 <div class="functional-section">
-    <p-button class="add-button" (click)="show()">
+    <p-button class="add-button" (click)="show('Add', '')">
         <i class="pi pi-user-plus"></i>
     </p-button>
     <input type="text" pInputText [(ngModel)]="searchValue" class="search-input"/>
@@ -22,7 +22,7 @@
             <ng-template pTemplate="footer">
                 <div class="contact-buttons">
                     <p-button (click)="delete($event, contact.id)" icon="pi pi-trash"/>
-                    <p-button icon="pi pi-user-edit" />
+                    <p-button (click)="show('edit', contact.id)" icon="pi pi-user-edit" />
                 </div>
             </ng-template>
         </p-card>

@@ -1,0 +1,35 @@
+<form [formGroup]="updateContactForm" (ngSubmit)="onSubmit()">
+    <div class="p-field p-fluid">
+        <label for="firstName">First name</label>
+        <input id="firstName" pInputText formControlName="firstName" placeholder="Enter first name" [value]="(contact$ | async)?.firstName"/>
+        @if(updateContactForm.get('firstName')?.invalid && updateContactForm.get('firstName')?.touched) {
+            <p-message severity="error" text="Invalid first name"></p-message>
+        }
+    </div>
+    <div class="p-field p-fluid">
+        <label for="lastName">Last name</label>
+        <input id="lastName" pInputText formControlName="lastName" placeholder="Enter lastName" [value]="(contact$ | async)?.lastName"/>
+        @if (updateContactForm.get('lastName')?.invalid && updateContactForm.get('lastName')?.touched) {
+            <p-message severity="error" text="Last name is required"></p-message>
+        }
+    </div>
+    <div class="p-field p-fluid">
+        <label for="email">Email</label>
+        <input id="email" pInputText formControlName="email" placeholder="Enter email" [value]="(contact$ | async)?.email"/>
+        @if (updateContactForm.get('email')?.invalid && updateContactForm.get('email')?.touched) {
+            <p-message severity="error" text="Email is required"></p-message>
+        }
+    </div>
+    <div class="p-field p-fluid">
+        <label for="numberPhone">Number phone</label>
+        <input id="numberPhone" pInputText formControlName="numberPhone" placeholder="Enter number phone" [value]="(contact$ | async)?.numberPhone"/>
+        @if (updateContactForm.get('numberPhone')?.invalid && updateContactForm.get('numberPhone')?.touched) {
+            <p-message severity="error" text="Number phone is required"></p-message>
+        }
+    </div>
+    <input type="hidden" id="id" formControlName="id" value="{{(contact$ | async)?.id}}" />
+    <input type="hidden" id="userId" formControlName="userId" value=""/>
+    <div class="update-button">
+        <button pButton label="Save" type="submit" class="p-button-success" [disabled]="updateContactForm.invalid"></button>
+    </div>
+</form>

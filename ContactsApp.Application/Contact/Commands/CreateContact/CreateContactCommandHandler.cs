@@ -16,7 +16,7 @@ namespace ContactsApp.Application.Contact.Commands.CreateContact
         private readonly IHttpContextAccessor _httpContextAccessor;
         private ILogger<CreateContactCommandHandler> _logger;
         
-        public CreateContactCommandHandler(IContactsRepository contactsRepository, IMemoryCache memoryCache, ILogger<CreateContactCommandHandler> logger,IHttpContextAccessor httpContextAccessor)
+        public CreateContactCommandHandler(IContactsRepository contactsRepository, IMemoryCache memoryCache, ILogger<CreateContactCommandHandler> logger, IHttpContextAccessor httpContextAccessor)
         {
             _contactsRepository = contactsRepository ?? throw new ArgumentNullException(nameof(contactsRepository));
             _memoryCache = memoryCache ?? throw new ArgumentNullException(nameof(memoryCache));

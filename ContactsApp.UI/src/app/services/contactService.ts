@@ -82,7 +82,7 @@ export class ContactService {
     }
 
     private getById(contactId: string) : Observable<ContactDto> {
-        return this.httpClient.get<ContactDto>(`${this.API_URL}/Getcontacts/${contactId}`);
+        return this.httpClient.get<ContactDto>(`${this.API_URL}/GetContactById/${contactId}`);
     }
 
     private create(newContact: ContactDto): Observable<string> {
