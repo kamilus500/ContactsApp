@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { ContactDto } from "../models/contactDto";
 
 @Injectable({
@@ -11,23 +11,58 @@ export class ContactService {
     private API_URL : string = 'https://localhost:7239';
     private httpClient: HttpClient = inject(HttpClient);
 
-    getAll() : Observable<ContactDto[]> {
+    public contacts$: BehaviorSubject<ContactDto[]> = new BehaviorSubject<ContactDto[]>([]);
+    public contact$: Observable<ContactDto> = new Observable<ContactDto>();
+
+    loadContacts(): void {
+        this.getAll().subscribe(
+            contacts => this.contacts$.next(contacts),
+            error => console.log('Error when loading contacts', error)
+        )
+    }
+    
+    loadContactById(contactId: string): void {
+        this.contact$ = this.getById(contactId);
+    }
+
+    createContact(newContact: ContactDto): void{
+        this.create(newContact)
+            .subscribe(() => {
+                this.loadContacts();
+            });
+    }
+
+    deleteContact(contactId: string): void{
+        this.delete(contactId)
+            .subscribe(() => {
+                this.loadContacts();
+            });
+    }
+
+    updateContact(updatedContactDto: ContactDto): void {
+        this.update(updatedContactDto)
+            .subscribe(() => {
+                this.loadContacts();
+            });
+    }
+
+    private getAll() : Observable<ContactDto[]> {
         return this.httpClient.get<ContactDto[]>(`${this.API_URL}/GetContacts`);
     }
 
-    getById(contactId: string) : Observable<ContactDto> {
+    private getById(contactId: string) : Observable<ContactDto> {
         return this.httpClient.get<ContactDto>(`${this.API_URL}/Getcontacts/${contactId}`);
     }
 
-    create(newContact: ContactDto): Observable<string> {
+    private create(newContact: ContactDto): Observable<string> {
         return this.httpClient.post<string>(`${this.API_URL}/CreateContact`, newContact);
     }
 
-    delete(contactId: string): Observable<void> {
+    private delete(contactId: string): Observable<void> {
         return this.httpClient.delete<void>(`${this.API_URL}/DeleteContact/${contactId}`);
     }
 
-    update(updatedContactDto: ContactDto): Observable<ContactDto> {
+    private update(updatedContactDto: ContactDto): Observable<ContactDto> {
         return this.httpClient.put<ContactDto>(`${this.API_URL}/UpdateContact`, updatedContactDto);
     }
 }

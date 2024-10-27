@@ -9,7 +9,7 @@
 </div>
 
 <div class="contact-container">
-    <div *ngFor="let contact of contacts"  class="contact-card">
+    <div *ngFor="let contact of contacts$ | async"  class="contact-card">
         <p-card>
             <ng-template pTemplate="header">
                 <p-avatar image="https://www.gravatar.com/avatar?d=mp" size="large" shape="circle" class="p-mr-2 avatar-image"></p-avatar>

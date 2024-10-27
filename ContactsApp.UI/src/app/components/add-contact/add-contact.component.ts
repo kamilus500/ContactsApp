@@ -27,10 +27,7 @@ export class AddContactComponent {
   onSubmit(): void {
     if (this.createContactForm.valid) {
       let newContact = this.createContactForm.value as ContactDto;
-      this.contactService.create(newContact)
-        .subscribe(response => {
-            this.router.navigateByUrl('/contacts');
-        });
+      this.contactService.createContact(newContact);
     }
   }
 }

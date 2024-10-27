@@ -4,6 +4,7 @@ import { ContactDto } from '../../models/contactDto';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AddContactComponent } from '../add-contact/add-contact.component';
+import { filter, map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-contacts',
@@ -12,47 +13,35 @@ import { AddContactComponent } from '../add-contact/add-contact.component';
 })
 export class ContactsComponent implements OnInit {
   ref: DynamicDialogRef | undefined;
-  contacts: ContactDto[] = [];
+  contacts$: Observable<ContactDto[]>;
   userId: string | null = null;
   searchValue: string | null = null;
-
 
   constructor(private contactService: ContactService, 
     private confirmationService: ConfirmationService, 
     public dialogService: DialogService,
     private messageService: MessageService
   ) {
-
+    this.contacts$ = this.contactService.contacts$;
   }
 
   ngOnInit(): void {
-    this.contactService.getAll()
-      .subscribe({
-        next: (response: ContactDto[]) => {
-          this.contacts = response;
-        },
-        error: (error) => {
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Something went wrong' });
-        }
-      });
+    this.contactService.loadContacts();
   }
 
   search(): void {
     if (this.searchValue !== '') {
-      this.contacts = this.contacts
-                        .filter(c => c.firstName.toLocaleLowerCase().includes(this.searchValue!.toLocaleLowerCase()) ||
-                                     c.lastName.toLocaleLowerCase().includes(this.searchValue!.toLocaleLowerCase()) ||
-                                     c.email.toLocaleLowerCase().includes(this.searchValue!.toLocaleLowerCase()))
+      this.contacts$ = this.contacts$
+                            .pipe(
+                              map(c => 
+                                    c.filter(c => 
+                                        c.firstName.toLocaleLowerCase().includes(this.searchValue!.toLocaleLowerCase()) ||
+                                        c.lastName.toLocaleLowerCase().includes(this.searchValue!.toLocaleLowerCase()) ||
+                                        c.email.toLocaleLowerCase().includes(this.searchValue!.toLocaleLowerCase())
+                                      )
+                                  ));
     } else {
-      this.contactService.getAll()
-        .subscribe({
-          next: (response: ContactDto[]) => {
-            this.contacts = response;
-          },
-          error: (error) => {
-            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Something went wrong' });
-          }
-        })
+      this.contactService.loadContacts();
     }
   }
 
@@ -74,24 +63,7 @@ export class ContactsComponent implements OnInit {
         rejectIcon:"none",
         rejectButtonStyleClass:"p-button-text",
         accept: () => {
-          this.contactService.delete(contactId)
-           .subscribe({
-               next: () => {
-                this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Deleted successfully' });
-                this.contactService.getAll()
-                  .subscribe({
-                    next: (response: ContactDto[]) => {
-                      this.contacts = response;
-                    },
-                    error: (error) => {
-                      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Something went wrong' });
-                    }
-                  });
-              },
-              error: (error) => {
-                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Something went wrong' });
-              }
-            })
+          this.contactService.deleteContact(contactId);
         }
     });
   }
