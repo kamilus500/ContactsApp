@@ -20,8 +20,7 @@ export class ContactsComponent implements OnInit {
 
   constructor(private contactService: ContactService, 
     private confirmationService: ConfirmationService, 
-    public dialogService: DialogService,
-    private messageService: MessageService
+    public dialogService: DialogService
   ) {
     this.contacts$ = this.contactService.contacts$;
   }
@@ -54,7 +53,6 @@ export class ContactsComponent implements OnInit {
         contentStyle: { overflow: 'auto' },
       });
     } else {
-
       this.contactService.loadContactById(contactId);
 
       this.ref = this.dialogService.open(EditContactComponent, {

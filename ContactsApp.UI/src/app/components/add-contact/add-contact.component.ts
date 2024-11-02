@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ContactService } from '../../services/contactService';
 import { ContactDto } from '../../models/contactDto';
-import { Router } from '@angular/router';
+import { DialogService } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-add-contact',
@@ -13,7 +13,7 @@ export class AddContactComponent {
 
   createContactForm: FormGroup;
 
-  constructor(private router: Router, private fb: FormBuilder, private contactService: ContactService) {
+  constructor(private fb: FormBuilder, private contactService: ContactService, private dialogService: DialogService) {
     this.createContactForm = this.fb.group({
       id: [''],
       firstName: ['', Validators.required],
@@ -28,6 +28,10 @@ export class AddContactComponent {
     if (this.createContactForm.valid) {
       let newContact = this.createContactForm.value as ContactDto;
       this.contactService.createContact(newContact);
+
+      this.dialogService.dialogComponentRefMap.forEach(dialog => {
+          dialog.destroy();
+      });
     }
   }
 }

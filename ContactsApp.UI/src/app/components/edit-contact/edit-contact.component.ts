@@ -4,6 +4,7 @@ import { ContactService } from '../../services/contactService';
 import { Router } from '@angular/router';
 import { ContactDto } from '../../models/contactDto';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { DialogService } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-edit-contact',
@@ -15,7 +16,7 @@ export class EditContactComponent implements OnInit {
 
   contact$: Observable<ContactDto>;
 
-  constructor(private router: Router, private fb: FormBuilder, private contactService: ContactService) {
+  constructor(private router: Router, private fb: FormBuilder, private contactService: ContactService, private dialogService: DialogService) {
     this.contact$ = this.contactService.contact$;
 
     this.updateContactForm = this.fb.group({
@@ -44,6 +45,10 @@ export class EditContactComponent implements OnInit {
     if (this.updateContactForm.valid) {
       let updatedContact = this.updateContactForm.value as ContactDto;
       this.contactService.updateContact(updatedContact);
+
+      this.dialogService.dialogComponentRefMap.forEach(dialog => {
+        dialog.destroy();
+    });
     }
   }
 }
