@@ -13,10 +13,10 @@ export class AuthService {
     private httpClient: HttpClient = inject(HttpClient);
 
     public isLogin$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-    public userEmail$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+    public userFullName$: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
-    setUserEmail(value: string): void {
-        this.userEmail$.next(value);
+    setUserFullName(value: string): void {
+        this.userFullName$.next(value);
     }
 
     setIsLogin(value: boolean): void {

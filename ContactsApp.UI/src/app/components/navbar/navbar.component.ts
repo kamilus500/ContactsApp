@@ -12,7 +12,7 @@ import { LocalStorageService } from '../../services/localStorageService';
 })
 export class NavbarComponent implements OnInit {
 
-  userEmail$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  userFullName$: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   constructor(private tokenService: TokenService,
     private localStorageService: LocalStorageService,
@@ -22,14 +22,14 @@ export class NavbarComponent implements OnInit {
     
   }
   ngOnInit(): void {
-    this.userEmail$ = this.authService.userEmail$;
+    this.userFullName$ = this.authService.userFullName$;
   }
 
   logout(): void {
-    this.localStorageService.remove('email');
+    this.localStorageService.remove('userFullName');
     this.tokenService.removeToken();
     this.authService.setIsLogin(false);
-    this.authService.setUserEmail('');
+    this.authService.setUserFullName('');
     this.router.navigateByUrl('/');
   }
 

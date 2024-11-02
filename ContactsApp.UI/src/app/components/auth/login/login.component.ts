@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { LocalStorageService } from '../../../services/localStorageService';
 import { LoadingService } from '../../../services/loadingService';
+import { LoginRegisterResponse } from '../../../models/loginRegisterResponse';
 
 @Component({
   selector: 'app-login',
@@ -38,12 +39,11 @@ export class LoginComponent {
 
       this.authService.login(loginDto)
         .subscribe({
-          next: (response) => {
-              this.tokenService.saveToken(response.accessToken);
-              this.localStorageService.set(loginDto.email, 'email');
+          next: (response: LoginRegisterResponse) => {
+              this.tokenService.saveToken(response.token);
               this.authService.setIsLogin(true);
-              this.authService.setUserEmail(loginDto.email);
-
+              this.authService.setUserFullName(response.fullName);
+              this.localStorageService.set(response.fullName, 'userFullName');
               this.loadingService.hide();
               this.router.navigateByUrl('/contacts');
           },

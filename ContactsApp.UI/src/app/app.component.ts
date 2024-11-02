@@ -19,8 +19,8 @@ export class AppComponent {
 
     if (this.tokenService.hasToken()) {
       this.authService.setIsLogin(true);
-      let email = this.localStorageService.get('email')
-      this.authService.setUserEmail(email);
+      let userFullname = this.localStorageService.get('userFullName')
+      this.authService.setUserFullName(userFullname);
     }
   }
 }

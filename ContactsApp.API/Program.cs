@@ -1,5 +1,4 @@
 using ContactsApp.Application.Extensions;
-using ContactsApp.Domain.Entities;
 using ContactsApp.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,8 +24,8 @@ app.UseCors("AllowSpecificOrigins");
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
-app.MapIdentityApi<User>();
 
 app.AddMiddlewares(app.Environment);
 app.MapControllers();

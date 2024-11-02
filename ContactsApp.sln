@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactsApp.API", "ContactsApp.API\ContactsApp.API.csproj", "{8043C115-5CD1-4F5E-BF3C-4DC453BA7307}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactsApp.API", "ContactsApp.API\ContactsApp.API.csproj", "{8043C115-5CD1-4F5E-BF3C-4DC453BA7307}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactsApp.Domain", "ContactsApp.Domain\ContactsApp.Domain.csproj", "{27459381-7753-43AC-B4E0-9DBAF3CDCFE4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactsApp.Domain", "ContactsApp.Domain\ContactsApp.Domain.csproj", "{27459381-7753-43AC-B4E0-9DBAF3CDCFE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactsApp.Infrastructure", "ContactsApp.Infrastructure\ContactsApp.Infrastructure.csproj", "{FB3CA6FA-3E3D-43FD-AFE9-98B14981F34D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactsApp.Infrastructure", "ContactsApp.Infrastructure\ContactsApp.Infrastructure.csproj", "{FB3CA6FA-3E3D-43FD-AFE9-98B14981F34D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactsApp.Application", "ContactsApp.Application\ContactsApp.Application.csproj", "{46637887-E805-467B-B513-3AE9BBFA4548}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactsApp.Application", "ContactsApp.Application\ContactsApp.Application.csproj", "{46637887-E805-467B-B513-3AE9BBFA4548}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

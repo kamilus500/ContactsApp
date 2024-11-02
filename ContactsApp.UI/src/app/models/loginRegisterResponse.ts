@@ -1,3 +1,4 @@
 export interface LoginRegisterResponse {
-    accessToken: string
+    token: string;
+    fullName: string
 }

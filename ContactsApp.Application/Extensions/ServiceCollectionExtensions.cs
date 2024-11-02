@@ -19,11 +19,10 @@ namespace ContactsApp.Application.Extensions
             MapsterConfig.Configure();
 
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
-
+            
             services.AddValidatorsFromAssemblyContaining<CreateContactCommandValidator>()
                 .AddFluentValidationAutoValidation()
-                .AddFluentValidationClientsideAdapters();
-                               
+                .AddFluentValidationClientsideAdapters();            
         }
 
         public static void AddMiddlewares(this IApplicationBuilder app, IWebHostEnvironment env)

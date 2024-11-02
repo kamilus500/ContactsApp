@@ -16,6 +16,8 @@ export class RegisterComponent {
   
   constructor(private fb: FormBuilder, private authService: AuthService, private messageService: MessageService, private router: Router, private loadingService: LoadingService) {
     this.registerForm = this.fb.group({
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
@@ -30,10 +32,14 @@ export class RegisterComponent {
     if (this.registerForm.valid) {
       let email = this.registerForm.get('email')?.value;
       let password = this.registerForm.get('password')?.value;
+      let firstName = this.registerForm.get('firstName')?.value;
+      let lastName = this.registerForm.get('lastName')?.value;
 
       let registerDto: LoginRegisterDto = {
         email: email,
-        password: password
+        password: password,
+        firstName: firstName,
+        lastName: lastName
       };
       
       this.loadingService.show();
