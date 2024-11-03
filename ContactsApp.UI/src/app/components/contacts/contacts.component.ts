@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ContactService } from '../../services/contactService';
 import { ContactDto } from '../../models/contactDto';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AddContactComponent } from '../add-contact/add-contact.component';
-import { filter, map, Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { EditContactComponent } from '../edit-contact/edit-contact.component';
 
 @Component({
@@ -76,5 +76,9 @@ export class ContactsComponent implements OnInit {
           this.contactService.deleteContact(contactId);
         }
     });
+  }
+
+  getImage(image: any): string {
+    return 'data:image/png;base64,' + image;
   }
 }

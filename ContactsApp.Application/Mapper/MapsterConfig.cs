@@ -18,7 +18,8 @@ namespace ContactsApp.Application.Mapper
                 .Map(dest => dest.FirstName, src => src.FirstName)
                 .Map(dest => dest.LastName, src => src.LastName)
                 .Map(dest => dest.NumberPhone, src => src.NumberPhone)
-                .Map(dest => dest.Email, src => src.Email);
+                .Map(dest => dest.Email, src => src.Email)
+                .Ignore(dest => dest.Image, src => src.Image);
         }
     }
 }

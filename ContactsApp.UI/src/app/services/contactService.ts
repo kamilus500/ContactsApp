@@ -35,7 +35,7 @@ export class ContactService {
         this.contact$ = this.getById(contactId);
     }
 
-    createContact(newContact: ContactDto): void{
+    createContact(newContact: FormData): void{
         this.create(newContact)
             .subscribe({
                 next: () => {
@@ -63,7 +63,7 @@ export class ContactService {
             })
     }
 
-    updateContact(updatedContactDto: ContactDto): void {
+    updateContact(updatedContactDto: FormData): void {
         this.update(updatedContactDto)
             .subscribe({
                 next: () => {
@@ -85,7 +85,7 @@ export class ContactService {
         return this.httpClient.get<ContactDto>(`${this.API_URL}/GetContactById/${contactId}`);
     }
 
-    private create(newContact: ContactDto): Observable<string> {
+    private create(newContact: FormData): Observable<string> {
         return this.httpClient.post<string>(`${this.API_URL}/CreateContact`, newContact);
     }
 
@@ -93,7 +93,7 @@ export class ContactService {
         return this.httpClient.delete<void>(`${this.API_URL}/DeleteContact/${contactId}`);
     }
 
-    private update(updatedContactDto: ContactDto): Observable<ContactDto> {
+    private update(updatedContactDto: FormData): Observable<ContactDto> {
         return this.httpClient.put<ContactDto>(`${this.API_URL}/UpdateContact`, updatedContactDto);
     }
 }

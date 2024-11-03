@@ -16,7 +16,11 @@ namespace ContactsApp.Application.Contact.Commands.CreateContact
         private readonly IHttpContextAccessor _httpContextAccessor;
         private ILogger<CreateContactCommandHandler> _logger;
         
-        public CreateContactCommandHandler(IContactsRepository contactsRepository, IMemoryCache memoryCache, ILogger<CreateContactCommandHandler> logger, IHttpContextAccessor httpContextAccessor)
+        public CreateContactCommandHandler(IContactsRepository contactsRepository, 
+            IMemoryCache memoryCache, 
+            ILogger<CreateContactCommandHandler> logger, 
+            IHttpContextAccessor httpContextAccessor
+        )
         {
             _contactsRepository = contactsRepository ?? throw new ArgumentNullException(nameof(contactsRepository));
             _memoryCache = memoryCache ?? throw new ArgumentNullException(nameof(memoryCache));
@@ -39,6 +43,12 @@ namespace ContactsApp.Application.Contact.Commands.CreateContact
             }
 
             newContact.UserId = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value.ToString();
+
+            using (var memoryStream = new MemoryStream())
+            {
+                await request.Image.CopyToAsync(memoryStream);
+                newContact.Image = memoryStream.ToArray();
+            }
 
             await _contactsRepository.CreateContact(newContact, cancellationToken);
 

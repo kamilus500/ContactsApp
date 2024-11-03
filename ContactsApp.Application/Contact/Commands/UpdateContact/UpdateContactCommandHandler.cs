@@ -16,7 +16,11 @@ namespace ContactsApp.Application.Contact.Commands.UpdateContact
         private readonly ILogger<UpdateContactCommandHandler> _logger;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UpdateContactCommandHandler(IContactsRepository contactsRepository, IMemoryCache memoryCache, ILogger<UpdateContactCommandHandler> logger, IHttpContextAccessor httpContextAccessor)
+        public UpdateContactCommandHandler(IContactsRepository contactsRepository, 
+            IMemoryCache memoryCache, 
+            ILogger<UpdateContactCommandHandler> logger, 
+            IHttpContextAccessor httpContextAccessor
+        )
         {
             _contactsRepository = contactsRepository ?? throw new ArgumentNullException(nameof(contactsRepository));
             _memoryCache = memoryCache ?? throw new ArgumentNullException(nameof(memoryCache));
@@ -35,6 +39,15 @@ namespace ContactsApp.Application.Contact.Commands.UpdateContact
             if (currentUser is null)
             {
                 throw new ArgumentNullException(nameof(currentUser));
+            }
+
+            if (request.Image != null)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    await request.Image.CopyToAsync(memoryStream);
+                    updatedContact.Image = memoryStream.ToArray();
+                }
             }
 
             updatedContact.UserId = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value.ToString();

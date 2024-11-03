@@ -12,7 +12,7 @@
     <div *ngFor="let contact of contacts$ | async"  class="contact-card">
         <p-card>
             <ng-template pTemplate="header">
-                <p-avatar image="https://www.gravatar.com/avatar?d=mp" size="large" shape="circle" class="p-mr-2 avatar-image"></p-avatar>
+                <p-avatar [image]="getImage(contact.image)" size="large" shape="circle" class="p-mr-2 avatar-image"></p-avatar>
                 <span>{{ contact.firstName }} {{ contact.lastName }}</span>
             </ng-template>
             <div class="p-card-content">

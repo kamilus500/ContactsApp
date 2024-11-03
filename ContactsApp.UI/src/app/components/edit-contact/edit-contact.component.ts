@@ -13,7 +13,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 })
 export class EditContactComponent implements OnInit {
   updateContactForm: FormGroup;
-
+  selectedFile: File | null = null;
   contact$: Observable<ContactDto>;
 
   constructor(private router: Router, private fb: FormBuilder, private contactService: ContactService, private dialogService: DialogService) {
@@ -41,10 +41,25 @@ export class EditContactComponent implements OnInit {
     })
   }
 
+  onFileSelect(event: any) {
+    const input = event.target as HTMLInputElement;
+    if (input.files) {
+      this.selectedFile = input.files[0];
+    }
+  }
+
   onSubmit(): void {
     if (this.updateContactForm.valid) {
-      let updatedContact = this.updateContactForm.value as ContactDto;
-      this.contactService.updateContact(updatedContact);
+      let image = this.selectedFile!;
+
+      const formData = new FormData();
+      formData.append('id', this.updateContactForm.get('id')?.value);
+      formData.append('email', this.updateContactForm.get('email')?.value);
+      formData.append('firstName', this.updateContactForm.get('firstName')?.value);
+      formData.append('lastName', this.updateContactForm.get('lastName')?.value);
+      formData.append('numberPhone', this.updateContactForm.get('numberPhone')?.value);
+      formData.append('Image', image, 'image');
+      this.contactService.updateContact(formData);
 
       this.dialogService.dialogComponentRefMap.forEach(dialog => {
         dialog.destroy();

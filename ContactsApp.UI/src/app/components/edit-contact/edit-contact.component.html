@@ -27,6 +27,9 @@
             <p-message severity="error" text="Number phone is required"></p-message>
         }
     </div>
+    <div class="p-field p-fluid">
+        <input type="file" (change)="onFileSelect($event)" class="custom-file-input"/>
+    </div>
     <input type="hidden" id="id" formControlName="id" value="{{(contact$ | async)?.id}}" />
     <input type="hidden" id="userId" formControlName="userId" value=""/>
     <div class="update-button">

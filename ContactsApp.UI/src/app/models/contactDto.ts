@@ -3,5 +3,6 @@ export interface ContactDto {
     firstName: string,
     lastName: string,
     email: string,
-    numberPhone: string
+    numberPhone: string,
+    image: Uint8Array
 }

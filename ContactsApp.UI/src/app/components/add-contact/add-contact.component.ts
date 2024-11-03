@@ -10,9 +10,8 @@ import { DialogService } from 'primeng/dynamicdialog';
   styleUrl: './add-contact.component.scss'
 })
 export class AddContactComponent {
-
   createContactForm: FormGroup;
-
+  selectedFile: File | null = null;
   constructor(private fb: FormBuilder, private contactService: ContactService, private dialogService: DialogService) {
     this.createContactForm = this.fb.group({
       id: [''],
@@ -24,10 +23,25 @@ export class AddContactComponent {
     });
   }
 
+  onFileSelect(event: any) {
+    const input = event.target as HTMLInputElement;
+    if (input.files) {
+      this.selectedFile = input.files[0];
+    }
+  }
+
   onSubmit(): void {
     if (this.createContactForm.valid) {
-      let newContact = this.createContactForm.value as ContactDto;
-      this.contactService.createContact(newContact);
+      let image = this.selectedFile!;
+
+      const formData = new FormData();
+      formData.append('email', this.createContactForm.get('email')?.value);
+      formData.append('firstName', this.createContactForm.get('firstName')?.value);
+      formData.append('lastName', this.createContactForm.get('lastName')?.value);
+      formData.append('numberPhone', this.createContactForm.get('numberPhone')?.value);
+      formData.append('Image', image, 'image');
+
+      this.contactService.createContact(formData);
 
       this.dialogService.dialogComponentRefMap.forEach(dialog => {
           dialog.destroy();

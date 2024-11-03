@@ -34,7 +34,7 @@ namespace ContactsApp.API.Controllers
         }
 
         [HttpPost("/CreateContact")]
-        public async Task<ActionResult> CreateContact([FromBody] CreateContactCommand createContactCommand)
+        public async Task<ActionResult> CreateContact([FromForm] CreateContactCommand createContactCommand)
         {
             var createdContact = await _mediator.Send(createContactCommand);
             return Created($"/CreateContact/{createdContact.Id}", createdContact);
@@ -48,7 +48,7 @@ namespace ContactsApp.API.Controllers
         }
 
         [HttpPut("/UpdateContact")]
-        public async Task<ActionResult> UpdateContact([FromBody] UpdateContactCommand updateContactCommand)
+        public async Task<ActionResult> UpdateContact([FromForm] UpdateContactCommand updateContactCommand)
         {
             var updatedContact = await _mediator.Send(updateContactCommand);
 
