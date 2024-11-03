@@ -25,6 +25,7 @@ namespace ContactsApp.Application.Auth.Commands.Login
 
         public async Task<LoginResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
+            _logger.LogInformation($"LoginCommand Handler at {DateTime.Now}");
             var loginResponse = new LoginResponse();
 
             var user = await _userManager.FindByEmailAsync(request.Email);

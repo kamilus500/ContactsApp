@@ -13,7 +13,7 @@ export class ContactService {
     private httpClient: HttpClient = inject(HttpClient);
 
     public contacts$: BehaviorSubject<ContactDto[]> = new BehaviorSubject<ContactDto[]>([]);
-    public contact$: Observable<ContactDto> = new Observable<ContactDto>();
+    public contact$: BehaviorSubject<ContactDto|null> = new BehaviorSubject<ContactDto|null>(null);
 
     constructor(private loadingService: LoadingService) {
 
@@ -32,7 +32,15 @@ export class ContactService {
     }
 
     loadContactById(contactId: string): void {
-        this.contact$ = this.getById(contactId);
+        this.getById(contactId)
+            .subscribe({
+                next: (contact) => {
+                    this.contact$.next(contact);
+                },
+                error: (error) => {
+                    console.log('Error when loading contacts', error)
+                }
+            });
     }
 
     createContact(newContact: FormData): void{

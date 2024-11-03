@@ -14,7 +14,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 export class EditContactComponent implements OnInit {
   updateContactForm: FormGroup;
   selectedFile: File | null = null;
-  contact$: Observable<ContactDto>;
+  contact$: Observable<ContactDto|null>;
 
   constructor(private router: Router, private fb: FormBuilder, private contactService: ContactService, private dialogService: DialogService) {
     this.contact$ = this.contactService.contact$;
@@ -32,11 +32,11 @@ export class EditContactComponent implements OnInit {
   ngOnInit(): void {
     this.contact$.subscribe(contact => {
       this.updateContactForm.patchValue({
-        id: contact.id,
-        firstName: contact.firstName,
-        lastName: contact.lastName,
-        email: contact.email,
-        numberPhone: contact.numberPhone,
+        id: contact?.id,
+        firstName: contact?.firstName,
+        lastName: contact?.lastName,
+        email: contact?.email,
+        numberPhone: contact?.numberPhone,
       })
     })
   }
