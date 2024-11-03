@@ -48,7 +48,9 @@ export class LoginComponent {
               this.authService.setImage(imageUrl);
               this.localStorageService.set(imageUrl, 'image')
               this.localStorageService.set(response.fullName, 'userFullName');
+
               this.loadingService.hide();
+
               this.router.navigateByUrl('/contacts');
           },
           error: (error) => {
@@ -57,6 +59,8 @@ export class LoginComponent {
             } else {
               this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Something went wrong' });
             }
+
+            this.loadingService.hide();
           }
         })
     }
