@@ -1,4 +1,6 @@
-﻿namespace ContactsApp.Application.Auth.Commands
+﻿using Microsoft.AspNetCore.Http;
+
+namespace ContactsApp.Application.Auth.Commands
 {
     public class RegisterDto
     {
@@ -6,6 +8,6 @@
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        //public byte[] Image { get; set; }
+        public IFormFile Image { get; set; }
     }
 }

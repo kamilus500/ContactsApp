@@ -33,6 +33,7 @@ namespace ContactsApp.Application.Auth.Commands.Login
             {
                 loginResponse.Token = _tokenRepository.GenerateToken(user);
                 loginResponse.FullName = $"{user.FirstName} {user.LastName}";
+                loginResponse.UserImage = user.Image;
             }
 
             return loginResponse;

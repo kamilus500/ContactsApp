@@ -1,5 +1,4 @@
 ﻿
-using ContactsApp.Domain.Entities;
 using MediatR;
 
 namespace ContactsApp.Application.Auth.Commands.Register

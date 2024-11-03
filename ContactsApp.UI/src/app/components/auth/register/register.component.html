@@ -37,6 +37,9 @@
                     <p-message severity="error" text="Passwords must match"></p-message>
                 }
         </div>
+        <div class="p-field p-fluid">
+            <input type="file" (change)="onFileSelect($event)" class="custom-file-input"/>
+        </div>
         <div class="register-button">
             <button pButton label="Register" type="submit" class="p-button-error"
                 [disabled]="registerForm.invalid"></button>

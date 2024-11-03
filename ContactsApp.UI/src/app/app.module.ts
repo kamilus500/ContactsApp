@@ -30,7 +30,7 @@ import { LocalStorageService } from './services/localStorageService';
 import { FilterService } from 'primeng/api';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { EditContactComponent } from './components/edit-contact/edit-contact.component';
-
+import { FileUploadModule } from 'primeng/fileupload';
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,7 +57,8 @@ import { EditContactComponent } from './components/edit-contact/edit-contact.com
     AvatarModule,
     TabViewModule,
     ToastModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    FileUploadModule
   ],
   providers: [TokenService, ContactService, AuthService, MessageService, ConfirmationService, DialogService, LocalStorageService, FilterService, {
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true,

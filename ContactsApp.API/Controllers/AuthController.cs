@@ -21,7 +21,7 @@ namespace ContactsApp.API.Controllers
         }
 
         [HttpPost("/register")]
-        public async Task<ActionResult> Register([FromBody] RegisterCommand registerCommand)
+        public async Task<ActionResult> Register([FromForm] RegisterCommand registerCommand)
         {
             var result = await _mediator.Send(registerCommand);
             return Ok(result);

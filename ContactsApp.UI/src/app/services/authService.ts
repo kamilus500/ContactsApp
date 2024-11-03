@@ -27,7 +27,7 @@ export class AuthService {
         return this.httpClient.post<LoginRegisterResponse>(`${this.API_URL}/login`, loginDto);
     }
 
-    register(registerDto: LoginRegisterDto): Observable<Object>{
+    register(registerDto: FormData): Observable<Object>{
         return this.httpClient.post(`${this.API_URL}/register`, registerDto);
     }
 }

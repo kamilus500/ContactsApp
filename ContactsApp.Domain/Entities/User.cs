@@ -6,7 +6,7 @@ namespace ContactsApp.Domain.Entities
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-
+        public byte[] Image { get; set; }
         public IEnumerable<Contact> Contacts { get; set; }
     }
 }
