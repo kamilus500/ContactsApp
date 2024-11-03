@@ -1,4 +1,5 @@
 export interface LoginRegisterResponse {
     token: string;
-    fullName: string
+    fullName: string,
+    userImage: Uint8Array
 }

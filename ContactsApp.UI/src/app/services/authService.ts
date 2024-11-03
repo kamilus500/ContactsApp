@@ -14,6 +14,11 @@ export class AuthService {
 
     public isLogin$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     public userFullName$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+    public imageUrl$ : BehaviorSubject<string> = new BehaviorSubject<string>('');
+
+    setImage(value: string): void {
+        this.imageUrl$.next(value);
+    }
 
     setUserFullName(value: string): void {
         this.userFullName$.next(value);

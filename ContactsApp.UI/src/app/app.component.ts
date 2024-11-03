@@ -21,6 +21,8 @@ export class AppComponent {
       this.authService.setIsLogin(true);
       let userFullname = this.localStorageService.get('userFullName')
       this.authService.setUserFullName(userFullname);
+      let imageUrl = this.localStorageService.get('image');
+      this.authService.setImage(imageUrl);
     }
   }
 }
