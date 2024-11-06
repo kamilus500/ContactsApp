@@ -69,6 +69,7 @@ namespace ContactsApp.Infrastructure.Extensions
 
             services.AddTransient<IContactsRepository, ContactsRepository>();
             services.AddTransient<ITokenRepository, TokenRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
         }
     }
 }

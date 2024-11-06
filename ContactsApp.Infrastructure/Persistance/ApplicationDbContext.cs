@@ -29,13 +29,14 @@ namespace ContactsApp.Infrastructure.Persistance
                 .WithMany(x => x.Contacts)
                 .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
+
         }
 
         public string GetCurrentUserId()
         {
             var currentUser = _httpContextAccessor.HttpContext?.User;
 
-            if (currentUser is null)
+            if (currentUser == null)
             {
                 throw new ArgumentNullException(nameof(currentUser));
             }
