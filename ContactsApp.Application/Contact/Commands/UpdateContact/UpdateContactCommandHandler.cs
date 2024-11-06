@@ -41,13 +41,18 @@ namespace ContactsApp.Application.Contact.Commands.UpdateContact
                 throw new ArgumentNullException(nameof(currentUser));
             }
 
-            if (request.Image != null)
+            if (request.Image != null && request.Image.Length > 0)
             {
                 using (var memoryStream = new MemoryStream())
                 {
                     await request.Image.CopyToAsync(memoryStream);
                     updatedContact.Image = memoryStream.ToArray();
                 }
+            }
+            else
+            {
+                var contact = await _contactsRepository.GetContactById(updatedContact.Id, cancellationToken);
+                updatedContact.Image = contact.Image;
             }
 
             updatedContact.UserId = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value.ToString();

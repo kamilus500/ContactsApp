@@ -58,7 +58,13 @@ export class EditContactComponent implements OnInit {
       formData.append('firstName', this.updateContactForm.get('firstName')?.value);
       formData.append('lastName', this.updateContactForm.get('lastName')?.value);
       formData.append('numberPhone', this.updateContactForm.get('numberPhone')?.value);
-      formData.append('Image', image, 'image');
+
+      if (image) {  
+        formData.append('Image', image, 'image');
+      } else {
+        formData.append('Image', new Blob);
+      }
+      
       this.contactService.updateContact(formData);
 
       this.dialogService.dialogComponentRefMap.forEach(dialog => {
