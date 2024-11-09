@@ -14,28 +14,21 @@ namespace ContactsApp.Application.CurrentUser.Queries.GetUser
         private readonly IMemoryCache _memoryCache;
         private readonly ILogger<GetUserQueryHandler> _logger;
         private readonly IUserRepository _userRepository;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ITokenRepository _tokenRepository;
 
-        public GetUserQueryHandler(IMemoryCache memoryCache, ILogger<GetUserQueryHandler> logger, IUserRepository userRepository, IHttpContextAccessor httpContextAccessor)
+        public GetUserQueryHandler(IMemoryCache memoryCache, ILogger<GetUserQueryHandler> logger, IUserRepository userRepository, ITokenRepository tokenRepository)
         {
             _memoryCache = memoryCache ?? throw new ArgumentNullException(nameof(memoryCache));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
-            _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
+            _tokenRepository = tokenRepository ?? throw new ArgumentNullException(nameof(tokenRepository));
         }
 
         public async Task<UserDto> Handle(GetUserQuery request, CancellationToken cancellationToken)
         {
             _logger.LogInformation($"GetUser query handler {DateTime.Now}");
 
-            var currentUser = _httpContextAccessor.HttpContext?.User;
-
-            if (currentUser is null)
-            {
-                throw new ArgumentNullException(nameof(currentUser));
-            }
-
-            var id = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value.ToString();
+            var id = _tokenRepository.GetUserId();
 
             var user = await _userRepository.GetUser(id, cancellationToken);
 

@@ -14,18 +14,18 @@ namespace ContactsApp.Application.Contact.Commands.UpdateContact
         private readonly IContactsRepository _contactsRepository;
         private readonly IMemoryCache _memoryCache;
         private readonly ILogger<UpdateContactCommandHandler> _logger;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ITokenRepository _tokenRepository;
 
         public UpdateContactCommandHandler(IContactsRepository contactsRepository, 
             IMemoryCache memoryCache, 
             ILogger<UpdateContactCommandHandler> logger, 
-            IHttpContextAccessor httpContextAccessor
+            ITokenRepository tokenRepository
         )
         {
             _contactsRepository = contactsRepository ?? throw new ArgumentNullException(nameof(contactsRepository));
             _memoryCache = memoryCache ?? throw new ArgumentNullException(nameof(memoryCache));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(_httpContextAccessor));
+            _tokenRepository = tokenRepository ?? throw new ArgumentNullException(nameof(tokenRepository));
         }
 
         public async Task<Domain.Entities.Contact> Handle(UpdateContactCommand request, CancellationToken cancellationToken)
@@ -33,13 +33,6 @@ namespace ContactsApp.Application.Contact.Commands.UpdateContact
             _logger.LogInformation($"UpdateContactCommandHandler handler execute {DateTime.UtcNow}");
 
             var updatedContact = request.Adapt<Domain.Entities.Contact>();
-
-            var currentUser = _httpContextAccessor.HttpContext?.User;
-
-            if (currentUser is null)
-            {
-                throw new ArgumentNullException(nameof(currentUser));
-            }
 
             if (request.Image != null && request.Image.Length > 0)
             {
@@ -55,7 +48,7 @@ namespace ContactsApp.Application.Contact.Commands.UpdateContact
                 updatedContact.Image = contact.Image;
             }
 
-            updatedContact.UserId = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value.ToString();
+            updatedContact.UserId = _tokenRepository.GetUserId();
 
             await _contactsRepository.UpdateContact(updatedContact, cancellationToken);
 

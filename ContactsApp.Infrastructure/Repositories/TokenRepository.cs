@@ -1,5 +1,6 @@
 ﻿using ContactsApp.Domain.Entities;
 using ContactsApp.Domain.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -11,9 +12,11 @@ namespace ContactsApp.Infrastructure.Repositories
     public class TokenRepository : ITokenRepository
     {
         private readonly IConfiguration _configuration;
-        public TokenRepository(IConfiguration configuration)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public TokenRepository(IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+            _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
         }
 
         public string GenerateToken(User user)
@@ -36,6 +39,18 @@ namespace ContactsApp.Infrastructure.Repositories
 
             var tokenHandler = new JwtSecurityTokenHandler();
             return tokenHandler.WriteToken(token);
+        }
+
+        public string GetUserId()
+        {
+            var currentUser = _httpContextAccessor.HttpContext?.User;
+
+            if (currentUser is null)
+            {
+                throw new ArgumentNullException(nameof(currentUser));
+            }
+
+            return currentUser.FindFirst(ClaimTypes.NameIdentifier).Value.ToString();
         }
     }
 }

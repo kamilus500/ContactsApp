@@ -5,5 +5,7 @@ namespace ContactsApp.Domain.Interfaces
     public interface ITokenRepository
     {
         string GenerateToken(User user);
+
+        string GetUserId();
     }
 }

@@ -13,19 +13,19 @@ namespace ContactsApp.Application.Contact.Commands.CreateContact
     {
         private readonly IContactsRepository _contactsRepository;
         private readonly IMemoryCache _memoryCache;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ITokenRepository _tokenRepository;
         private ILogger<CreateContactCommandHandler> _logger;
         
         public CreateContactCommandHandler(IContactsRepository contactsRepository, 
             IMemoryCache memoryCache, 
             ILogger<CreateContactCommandHandler> logger, 
-            IHttpContextAccessor httpContextAccessor
+            ITokenRepository tokenRepository
         )
         {
             _contactsRepository = contactsRepository ?? throw new ArgumentNullException(nameof(contactsRepository));
             _memoryCache = memoryCache ?? throw new ArgumentNullException(nameof(memoryCache));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
+            _tokenRepository = tokenRepository ?? throw new ArgumentNullException(nameof(tokenRepository));
         }
 
         public async Task<Domain.Entities.Contact> Handle(CreateContactCommand request, CancellationToken cancellationToken)
@@ -35,14 +35,7 @@ namespace ContactsApp.Application.Contact.Commands.CreateContact
             var newContact = request.Adapt<Domain.Entities.Contact>();
             newContact.Id = Guid.NewGuid().ToString();
 
-            var currentUser = _httpContextAccessor.HttpContext?.User;
-
-            if (currentUser is null)
-            {
-                throw new ArgumentNullException(nameof(currentUser));
-            }
-
-            newContact.UserId = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value.ToString();
+            newContact.UserId = _tokenRepository.GetUserId();
 
             using (var memoryStream = new MemoryStream())
             {

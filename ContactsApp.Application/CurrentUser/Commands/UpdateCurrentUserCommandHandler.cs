@@ -16,18 +16,18 @@ namespace ContactsApp.Application.CurrentUser.Commands
         private readonly IUserRepository _userRepository;
         private readonly IMemoryCache _memoryCache;
         private readonly ILogger<UpdateContactCommandHandler> _logger;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ITokenRepository _tokenRepository;
 
         public UpdateCurrentUserCommandHandler(IUserRepository userRepository,
             IMemoryCache memoryCache,
             ILogger<UpdateContactCommandHandler> logger,
-            IHttpContextAccessor httpContextAccessor
+            ITokenRepository tokenRepository
         )
         {
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
             _memoryCache = memoryCache ?? throw new ArgumentNullException(nameof(memoryCache));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(_httpContextAccessor));
+            _tokenRepository = tokenRepository ?? throw new ArgumentNullException(nameof(tokenRepository));
         }
 
         public async Task<User> Handle(UpdateCurrentUserCommand request, CancellationToken cancellationToken)
@@ -36,14 +36,7 @@ namespace ContactsApp.Application.CurrentUser.Commands
 
             var userFromRequest = request.Adapt<User>();
 
-            var currentUser = _httpContextAccessor.HttpContext?.User;
-
-            if (currentUser is null)
-            {
-                throw new ArgumentNullException(nameof(currentUser));
-            }
-
-            var userId = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value.ToString();
+            var userId = _tokenRepository.GetUserId();
 
             userFromRequest.Id = userId;
             if (request.Image != null && request.Image.Length > 0)
