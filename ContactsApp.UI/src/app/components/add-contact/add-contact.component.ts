@@ -39,7 +39,12 @@ export class AddContactComponent {
       formData.append('firstName', this.createContactForm.get('firstName')?.value);
       formData.append('lastName', this.createContactForm.get('lastName')?.value);
       formData.append('numberPhone', this.createContactForm.get('numberPhone')?.value);
-      formData.append('Image', image, 'image');
+      if (image === null) {
+        formData.append('Image', new Blob());
+      } else {
+        formData.append('Image', image);
+      }
+      
 
       this.contactService.createContact(formData);
 

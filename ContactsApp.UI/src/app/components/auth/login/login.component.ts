@@ -40,26 +40,25 @@ export class LoginComponent {
       this.authService.loginUser(loginDto)
         .subscribe({
           next: (response: LoginRegisterResponse) => {
-              let imageUrl = 'data:image/png;base64,' + response.userImage;
+              if (response.token) {  
+                let imageUrl = 'data:image/png;base64,' + response.userImage;
 
-              this.tokenService.saveToken(response.token);
-              this.authService.setIsLogin(true);
-              this.authService.setUserFullName(response.fullName);
-              this.authService.setImage(imageUrl);
-              this.localStorageService.set(imageUrl, 'image')
-              this.localStorageService.set(response.fullName, 'userFullName');
+                this.tokenService.saveToken(response.token);
+                this.authService.setIsLogin(true);
+                this.authService.setUserFullName(response.fullName);
+                this.authService.setImage(imageUrl);
+                this.localStorageService.set(imageUrl, 'image')
+                this.localStorageService.set(response.fullName, 'userFullName');
+
+                this.router.navigateByUrl('/contacts');
+              } else {
+                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Login or password is not correct' });  
+              }
 
               this.loadingService.hide();
-
-              this.router.navigateByUrl('/contacts');
           },
           error: (error) => {
-            if (error.status === 401) {
-              this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Login or password is not correct' });
-            } else {
-              this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Something went wrong' });
-            }
-
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Something went wrong' });
             this.loadingService.hide();
           }
         })

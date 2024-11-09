@@ -51,13 +51,18 @@ export class RegisterComponent {
       this.authService.registerUser(formData)
         .subscribe({
           next: (response) => {
-            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Registered successfully' });
-            this.loadingService.hide();
-            this.registerForm.reset();
-            this.router.navigateByUrl('auth');
+            if (response) {
+              this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Registered successfully' });
+              this.loadingService.hide();
+              this.registerForm.reset();
+              this.router.navigateByUrl('auth');
+            } else {
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Something went wrong' });
+              this.loadingService.hide();  
+            }
           },
           error: (error) => {
-            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Something went wrong' });
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: error });
             this.loadingService.hide();
           }
         });
