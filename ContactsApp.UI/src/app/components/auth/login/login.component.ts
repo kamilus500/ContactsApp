@@ -37,7 +37,7 @@ export class LoginComponent {
 
       let loginDto = this.loginForm.value as LoginRegisterDto;
 
-      this.authService.login(loginDto)
+      this.authService.loginUser(loginDto)
         .subscribe({
           next: (response: LoginRegisterResponse) => {
               let imageUrl = 'data:image/png;base64,' + response.userImage;

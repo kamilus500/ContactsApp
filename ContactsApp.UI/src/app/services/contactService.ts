@@ -1,22 +1,20 @@
-import { HttpClient } from "@angular/common/http";
-import { inject, Injectable } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
+import { Injectable } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
 import { ContactDto } from "../models/contactDto";
 import { LoadingService } from "./loadingService";
+import { ContactHttpService } from "./httpServices/contactHttpService";
 
 @Injectable({
     providedIn: 'root'
 })
   
-export class ContactService {
-    private API_URL : string = 'https://localhost:7239';
-    private httpClient: HttpClient = inject(HttpClient);
-
+export class ContactService extends ContactHttpService
+{
     public contacts$: BehaviorSubject<ContactDto[]> = new BehaviorSubject<ContactDto[]>([]);
     public contact$: BehaviorSubject<ContactDto|null> = new BehaviorSubject<ContactDto|null>(null);
 
     constructor(private loadingService: LoadingService) {
-
+        super()
     }
 
     loadContacts(): void {
@@ -83,25 +81,5 @@ export class ContactService {
                     console.log('Error when updating contact');
                 }
             })
-    }
-
-    private getAll() : Observable<ContactDto[]> {
-        return this.httpClient.get<ContactDto[]>(`${this.API_URL}/GetContacts`);
-    }
-
-    private getById(contactId: string) : Observable<ContactDto> {
-        return this.httpClient.get<ContactDto>(`${this.API_URL}/GetContactById/${contactId}`);
-    }
-
-    private create(newContact: FormData): Observable<string> {
-        return this.httpClient.post<string>(`${this.API_URL}/CreateContact`, newContact);
-    }
-
-    private delete(contactId: string): Observable<void> {
-        return this.httpClient.delete<void>(`${this.API_URL}/DeleteContact/${contactId}`);
-    }
-
-    private update(updatedContactDto: FormData): Observable<ContactDto> {
-        return this.httpClient.put<ContactDto>(`${this.API_URL}/UpdateContact`, updatedContactDto);
     }
 }

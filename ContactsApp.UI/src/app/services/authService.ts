@@ -3,15 +3,13 @@ import { inject, Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 import { LoginRegisterDto } from "../models/loginRegisterDto";
 import { LoginRegisterResponse } from "../models/loginRegisterResponse";
+import { AuthHttpService } from "./httpServices/authHttpService";
 
 @Injectable({
     providedIn: 'root'
 })
   
-export class AuthService {
-    private API_URL : string = 'https://localhost:7239';
-    private httpClient: HttpClient = inject(HttpClient);
-
+export class AuthService extends AuthHttpService {
     public isLogin$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     public userFullName$: BehaviorSubject<string> = new BehaviorSubject<string>('');
     public imageUrl$ : BehaviorSubject<string> = new BehaviorSubject<string>('');
@@ -28,12 +26,12 @@ export class AuthService {
         this.isLogin$.next(value);
     }
 
-    login(loginDto: LoginRegisterDto) : Observable<LoginRegisterResponse> {
-        return this.httpClient.post<LoginRegisterResponse>(`${this.API_URL}/login`, loginDto);
+    registerUser(newUser: FormData): Observable<Object> {
+        return this.register(newUser);
     }
 
-    register(registerDto: FormData): Observable<Object>{
-        return this.httpClient.post(`${this.API_URL}/register`, registerDto);
+    loginUser(loginUser: LoginRegisterDto): Observable<LoginRegisterResponse> {
+        return this.login(loginUser);
     }
 }
   

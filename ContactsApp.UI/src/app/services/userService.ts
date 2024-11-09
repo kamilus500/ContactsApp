@@ -1,23 +1,19 @@
-import { HttpClient } from "@angular/common/http";
-import { inject, Injectable } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
+import { Injectable } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
 import { UserDto } from "../models/userDto";
-import { Form } from "@angular/forms";
 import { LoadingService } from "./loadingService";
 import { AuthService } from "./authService";
+import { UserHttpService } from "./httpServices/userHttpService";
 
 @Injectable({
     providedIn: 'root'
 })
   
-export class UserService {
-    private API_URL : string = 'https://localhost:7239';
-    private httpClient: HttpClient = inject(HttpClient);
-
+export class UserService extends UserHttpService{
     public user$: BehaviorSubject<UserDto|null> = new BehaviorSubject<UserDto|null>(null);
 
     constructor(private loadingService: LoadingService, private authService: AuthService) {
-
+        super()
     }
 
     getUser(): void {
@@ -47,14 +43,6 @@ export class UserService {
                     console.log('Error when loading contacts', error)
                 }
             })
-    }
-
-    private update(userDto: FormData): Observable<UserDto> {
-        return this.httpClient.put<UserDto>(`${this.API_URL}/UpdateCurrentUser`, userDto);
-    }
-
-    private get(): Observable<UserDto|null> {
-        return this.httpClient.get<UserDto|null>(`${this.API_URL}/GetCurrentUser`);
     }
 }
   

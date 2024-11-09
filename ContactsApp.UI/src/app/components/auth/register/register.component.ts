@@ -48,7 +48,7 @@ export class RegisterComponent {
 
       this.loadingService.show();
 
-      this.authService.register(formData)
+      this.authService.registerUser(formData)
         .subscribe({
           next: (response) => {
             this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Registered successfully' });
