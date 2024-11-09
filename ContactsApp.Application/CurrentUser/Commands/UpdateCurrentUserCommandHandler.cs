@@ -32,6 +32,8 @@ namespace ContactsApp.Application.CurrentUser.Commands
 
         public async Task<User> Handle(UpdateCurrentUserCommand request, CancellationToken cancellationToken)
         {
+            _logger.LogInformation($"Update current user handler {DateTime.Now}");
+
             var userFromRequest = request.Adapt<User>();
 
             var currentUser = _httpContextAccessor.HttpContext?.User;
