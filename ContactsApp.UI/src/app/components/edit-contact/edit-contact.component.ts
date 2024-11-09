@@ -50,7 +50,7 @@ export class EditContactComponent implements OnInit {
 
   onSubmit(): void {
     if (this.updateContactForm.valid) {
-      let image = this.selectedFile!;
+      let image = this.selectedFile;
 
       const formData = new FormData();
       formData.append('id', this.updateContactForm.get('id')?.value);
@@ -62,14 +62,14 @@ export class EditContactComponent implements OnInit {
       if (image) {  
         formData.append('Image', image, 'image');
       } else {
-        formData.append('Image', new Blob);
+        formData.append('Image', new Blob());
       }
       
       this.contactService.updateContact(formData);
 
       this.dialogService.dialogComponentRefMap.forEach(dialog => {
         dialog.destroy();
-    });
+      });
     }
   }
 }

@@ -1,0 +1,33 @@
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <div class="image-input">
+    <img src="{{image$ | async}}" class="p-mr-2" width="10rem" height="10rem">
+  </div>
+  <div class="p-field p-fluid">
+      <label for="firstName">First name</label>
+      <input id="firstName" pInputText formControlName="firstName" placeholder="Enter your first name" />
+      @if(userForm.get('firstName')?.invalid && userForm.get('firstName')?.touched) {
+          <p-message severity="error" text="Invalid first name"></p-message>
+      }
+  </div>
+  <div class="p-field p-fluid">
+      <label for="lastName">Last name</label>
+      <input id="lastName" type="lastName" pInputText formControlName="lastName" placeholder="Enter your last name" />
+      @if (userForm.get('lastName')?.invalid && userForm.get('lastName')?.touched) {
+          <p-message severity="error" text="Last name is required"></p-message>
+      }
+  </div>
+  <div class="p-field p-fluid">
+    <label for="email">Email</label>
+    <input id="email" type="email" pInputText formControlName="email" placeholder="Enter your email" />
+    @if (userForm.get('email')?.invalid && userForm.get('email')?.touched) {
+        <p-message severity="error" text="Email is required"></p-message>
+    }
+  </div>
+  <div class="p-field p-fluid">
+    <input type="file" (change)="onFileSelect($event)" class="custom-file-input"/>
+  </div>
+  <input id="id" formControlName="id" type="hidden" />
+  <div class="save-button">
+      <button pButton label="Save" type="submit" class="p-button-error" [disabled]="userForm.invalid"></button>
+  </div>
+</form>

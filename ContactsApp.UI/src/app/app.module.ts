@@ -31,6 +31,8 @@ import { FilterService } from 'primeng/api';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { EditContactComponent } from './components/edit-contact/edit-contact.component';
 import { FileUploadModule } from 'primeng/fileupload';
+import { UserDetailsComponent } from './components/user-details/user-details.component';
+import { UserService } from './services/userService';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +43,8 @@ import { FileUploadModule } from 'primeng/fileupload';
     NavbarComponent,
     AddContactComponent,
     LoadingSpinnerComponent,
-    EditContactComponent
+    EditContactComponent,
+    UserDetailsComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -60,7 +63,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     ConfirmDialogModule,
     FileUploadModule
   ],
-  providers: [TokenService, ContactService, AuthService, MessageService, ConfirmationService, DialogService, LocalStorageService, FilterService, {
+  providers: [TokenService, ContactService, AuthService, MessageService, ConfirmationService, DialogService, LocalStorageService, FilterService, UserService, {
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true,
   }],
   bootstrap: [AppComponent]

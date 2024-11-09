@@ -1,0 +1,27 @@
+.p-card {
+    width: 50%;
+}
+  
+.p-field {
+    margin-bottom: 1rem;
+}
+
+.p-button {
+    width: 50%;
+}
+
+.save-button {
+    display: flex;
+    justify-content: center;
+}
+
+.image-input {
+    display: flex;
+    justify-content: center;
+    
+    img {
+        width: 10rem;
+        height: 10rem;
+        border-radius: 15%;
+    }
+}

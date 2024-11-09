@@ -12,12 +12,19 @@ namespace ContactsApp.Infrastructure.Repositories
         }
 
         public async Task<User> GetUser(string userId, CancellationToken cancellationToken)
-            => await _dbContext.Users.FirstAsync();
+            => await _dbContext.Users.AsNoTracking().FirstAsync();
 
-        public async Task Update(User user, CancellationToken cancellationToken)
+        public async Task<User> UpdateUser(User user, CancellationToken cancellationToken)
         {
-            _dbContext.Users.Update(user);
+            var curentUser = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == user.Id);
+            curentUser.FirstName = user.FirstName;
+            curentUser.LastName = user.LastName;
+            curentUser.Email = user.Email;
+            curentUser.Image = user.Image ?? curentUser.Image;
+
             await _dbContext.SaveChangesAsync(cancellationToken);
+
+            return curentUser;
         }
     }
 }

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { LoginRegisterDto } from '../../../models/loginRegisterDto';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/authService';
 import { MessageService } from 'primeng/api';

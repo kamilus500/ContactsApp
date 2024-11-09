@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/authService';
 import { BehaviorSubject } from 'rxjs';
 import { LocalStorageService } from '../../services/localStorageService';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { UserDetailsComponent } from '../user-details/user-details.component';
 
 @Component({
   selector: 'app-navbar',
@@ -14,11 +16,13 @@ export class NavbarComponent implements OnInit {
 
   userFullName$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   imageUrl$ : BehaviorSubject<string> = new BehaviorSubject<string>('');
-
+  ref: DynamicDialogRef | undefined;
+  
   constructor(private tokenService: TokenService,
     private localStorageService: LocalStorageService,
     private router: Router,
     private authService: AuthService,
+    private dialogService: DialogService
   ) {
     
   }
@@ -26,6 +30,14 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.userFullName$ = this.authService.userFullName$;
     this.imageUrl$ = this.authService.imageUrl$;
+  }
+
+  showDetails(): void {
+    this.ref = this.dialogService.open(UserDetailsComponent, {
+      header: 'User details',
+      modal: true,
+      contentStyle: { overflow: 'auto' }
+    });
   }
 
   logout(): void {

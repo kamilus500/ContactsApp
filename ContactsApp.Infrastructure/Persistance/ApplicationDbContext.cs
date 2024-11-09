@@ -29,7 +29,6 @@ namespace ContactsApp.Infrastructure.Persistance
                 .WithMany(x => x.Contacts)
                 .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
-
         }
 
         public string GetCurrentUserId()

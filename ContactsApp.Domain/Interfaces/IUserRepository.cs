@@ -6,6 +6,6 @@ namespace ContactsApp.Domain.Interfaces
     {
         Task<User> GetUser(string userId, CancellationToken cancellationToken);
         
-        Task Update(User user, CancellationToken cancellationToken);
+        Task<User> UpdateUser(User user, CancellationToken cancellationToken);
     }
 }

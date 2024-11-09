@@ -1,4 +1,7 @@
-﻿using ContactsApp.Application.CurrentUser.Queries.GetUser;
+﻿using ContactsApp.Application.Contact.Commands.UpdateContact;
+using ContactsApp.Application.CurrentUser;
+using ContactsApp.Application.CurrentUser.Commands;
+using ContactsApp.Application.CurrentUser.Queries.GetUser;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,5 +20,9 @@ namespace ContactsApp.API.Controllers
         [HttpGet("/GetCurrentUser")]
         public async Task<ActionResult> GetCurrentUser()
             => Ok(await _mediator.Send(new GetUserQuery()));
+
+        [HttpPut("/UpdateCurrentUser")]
+        public async Task<ActionResult> UpdateCurrentUser([FromForm] UpdateCurrentUserCommand userCommand)
+            => Ok(await _mediator.Send(userCommand));
     }
 }

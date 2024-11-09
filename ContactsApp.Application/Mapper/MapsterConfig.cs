@@ -1,5 +1,6 @@
 ﻿using ContactsApp.Application.CurrentUser;
 using ContactsApp.Domain.Dtos;
+using ContactsApp.Domain.Entities;
 using Mapster;
 
 namespace ContactsApp.Application.Mapper
@@ -25,8 +26,13 @@ namespace ContactsApp.Application.Mapper
             TypeAdapterConfig<Domain.Entities.User, UserDto>.NewConfig()
                 .Map(dest => dest.FirstName, src => src.FirstName)
                 .Map(dest => dest.LastName, src => src.LastName)
-                .Map(dest => dest.NumberPhone, src => src.PhoneNumber)
                 .Map(dest => dest.Email, src => src.Email);
+
+            TypeAdapterConfig<UserDto, User>.NewConfig()
+                .Map(dest => dest.FirstName, src => src.FirstName)
+                .Map(dest => dest.LastName, src => src.LastName)
+                .Map(dest => dest.Email, src => src.Email)
+                .Ignore(dest => dest.Image, src => src.Image);
         }
     }
 }
