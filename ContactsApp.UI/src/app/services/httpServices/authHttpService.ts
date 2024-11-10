@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { map, Observable } from "rxjs";
 import { LoginRegisterDto } from "../../models/loginRegisterDto";
 import { LoginRegisterResponse } from "../../models/loginRegisterResponse";
 
@@ -18,6 +18,11 @@ export class AuthHttpService {
 
     protected register(registerDto: FormData): Observable<Object>{
         return this.httpClient.post(`${this.API_URL}/register`, registerDto);
+    }
+
+    protected emailVeryfication(email: string): Observable<boolean> {
+        return this.httpClient.get<boolean>(`${this.API_URL}/emailveryfication/${email}`)
+            .pipe(map(response => response));
     }
 }
   

@@ -1,6 +1,4 @@
-﻿using ContactsApp.Application.Contact.Commands.UpdateContact;
-using ContactsApp.Application.CurrentUser;
-using ContactsApp.Application.CurrentUser.Commands;
+﻿using ContactsApp.Application.CurrentUser.Commands;
 using ContactsApp.Application.CurrentUser.Queries.GetUser;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

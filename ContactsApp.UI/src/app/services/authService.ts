@@ -26,6 +26,10 @@ export class AuthService extends AuthHttpService {
         this.isLogin$.next(value);
     }
 
+    isEmailUnique(email: string): Observable<boolean> {
+        return this.emailVeryfication(email);
+    }
+
     registerUser(newUser: FormData): Observable<Object> {
         return this.register(newUser);
     }

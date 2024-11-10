@@ -4,6 +4,7 @@ import { AuthService } from '../../../services/authService';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { LoadingService } from '../../../services/loadingService';
+import { emailUniqueValidator } from '../../../validators/emailUniqueValidator';
 
 @Component({
   selector: 'app-register',
@@ -18,7 +19,7 @@ export class RegisterComponent {
     this.registerForm = this.fb.group({
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email], emailUniqueValidator(this.authService)],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required]
     }, { validator: this.passwordsMatchValidator });

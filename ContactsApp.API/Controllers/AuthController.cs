@@ -1,5 +1,6 @@
 ﻿using ContactsApp.Application.Auth.Commands.Login;
 using ContactsApp.Application.Auth.Commands.Register;
+using ContactsApp.Application.Auth.Queries.EmailVeryfication;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,6 +25,13 @@ namespace ContactsApp.API.Controllers
         public async Task<ActionResult> Register([FromForm] RegisterCommand registerCommand)
         {
             var result = await _mediator.Send(registerCommand);
+            return Ok(result);
+        }
+
+        [HttpGet("/emailveryfication/{email}")]
+        public async Task<ActionResult> EmailVerication([FromRoute] string email)
+        {
+            var result = await _mediator.Send(new EmailVeryficationQuery(email));
             return Ok(result);
         }
     }

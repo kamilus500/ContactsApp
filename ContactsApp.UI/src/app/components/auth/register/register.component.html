@@ -12,7 +12,7 @@
             <label for="lastName">Last name</label>
             <input id="lastName" type="lastName" pInputText formControlName="lastName" placeholder="Enter your last name" />
             @if (registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched) {
-                <p-message severity="error" text="LastName is required"></p-message>
+                <p-message severity="error" text="Last name is required"></p-message>
             }
         </div>
         <div class="p-field p-fluid">
@@ -20,6 +20,9 @@
             <input id="email" pInputText formControlName="email" placeholder="Enter your email" />
             @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
                 <p-message severity="error" text="Invalid email"></p-message>
+            }
+            @else if (registerForm.get('email')?.hasError('emailTaken')) {
+                <p-message severity="error" text="This email is taken"></p-message>
             }
         </div>
         <div class="p-field p-fluid">

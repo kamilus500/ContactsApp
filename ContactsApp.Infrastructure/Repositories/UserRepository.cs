@@ -11,6 +11,13 @@ namespace ContactsApp.Infrastructure.Repositories
         {
         }
 
+        public async Task<bool> EmailVeryfication(string email, CancellationToken cancellationToken)
+        {
+            var user = await _dbContext.Users.Select(x => x.Email).FirstOrDefaultAsync(x => x.Equals(email));
+
+            return user != null;
+        }
+
         public async Task<User> GetUser(string userId, CancellationToken cancellationToken)
             => await _dbContext.Users.AsNoTracking().FirstAsync();
 
