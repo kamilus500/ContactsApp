@@ -23,8 +23,8 @@ namespace ContactsApp.Application.Contact.Commands.DeleteContact
             _logger.LogInformation($"DeleteContactCommand handler execute {DateTime.UtcNow}");
             await _contactRepository.DeleteContact(request.ContactId, cancellationToken);
 
-            _memoryCache.Remove(CacheItemKeys.allContactsCacheKey);
             _memoryCache.Remove($"{CacheItemKeys.mainContactCacheKey}_{request.ContactId}");
+            CacheItemKeys.actualCacheKey = string.Empty;
         }
     }
 }

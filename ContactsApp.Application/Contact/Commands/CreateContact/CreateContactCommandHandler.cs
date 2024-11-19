@@ -45,7 +45,7 @@ namespace ContactsApp.Application.Contact.Commands.CreateContact
 
             await _contactsRepository.CreateContact(newContact, cancellationToken);
 
-            _memoryCache.Remove(CacheItemKeys.allContactsCacheKey);
+            _memoryCache.Remove(CacheItemKeys.actualCacheKey);
 
             return newContact;
         }

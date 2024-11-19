@@ -51,8 +51,8 @@ namespace ContactsApp.Application.Contact.Commands.UpdateContact
             updatedContact.UserId = _tokenRepository.GetUserId();
 
             await _contactsRepository.UpdateContact(updatedContact, cancellationToken);
-
-            _memoryCache.Remove(CacheItemKeys.allContactsCacheKey);
+            _memoryCache.Remove(CacheItemKeys.actualCacheKey);
+            CacheItemKeys.actualCacheKey = string.Empty;
 
             return updatedContact;
         }
