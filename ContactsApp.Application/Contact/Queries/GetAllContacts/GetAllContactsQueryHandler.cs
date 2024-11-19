@@ -28,22 +28,23 @@ namespace ContactsApp.Application.Contact.Queries.GetAllContacts
             var cacheKey = $"{CacheItemKeys.allContactsCacheKey}_{request.Take}_{request.Skip}";
             var actuallCacheKey = CacheItemKeys.actualCacheKey;
 
-                if (!_memoryCache.TryGetValue(cacheKey, out IEnumerable<ContactDto> contactDtos))
-                {
-                    var contacts = await _contactsRepository.GetContacts(request.Take, request.Skip, cancellationToken);
+            if (!actuallCacheKey.Contains(cacheKey, StringComparison.InvariantCulture) || !_memoryCache.TryGetValue(cacheKey, out IEnumerable<ContactDto> contactDtos))
+            {
+                var contacts = await _contactsRepository.GetContacts(request.Take, request.Skip, cancellationToken);
 
-                    contactDtos = contacts.Adapt<IEnumerable<ContactDto>>();
+                contactDtos = contacts.Adapt<IEnumerable<ContactDto>>();
 
-                    var cacheEntryOptions = new MemoryCacheEntryOptions()
-                        .SetSlidingExpiration(TimeSpan.FromSeconds(60))
-                        .SetAbsoluteExpiration(TimeSpan.FromSeconds(3600))
-                        .SetPriority(CacheItemPriority.Normal)
-                        .SetSize(1024);
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromSeconds(60))
+                    .SetAbsoluteExpiration(TimeSpan.FromSeconds(3600))
+                    .SetPriority(CacheItemPriority.Normal)
+                    .SetSize(1024);
 
-                    _memoryCache.Set(cacheKey, contactDtos, cacheEntryOptions);
-                    CacheItemKeys.actualCacheKey = cacheKey;
-                }
+                _memoryCache.Set(cacheKey, contactDtos, cacheEntryOptions);
+                CacheItemKeys.actualCacheKey = cacheKey;
                 return contactDtos;
+            }
+            return contactDtos;
         }
     }
 }
