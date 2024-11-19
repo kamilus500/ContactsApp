@@ -18,6 +18,10 @@ export class ContactsComponent implements OnInit {
   userId: string | null = null;
   searchValue: string | null = null;
 
+  currentPage: number = 0;
+
+  rows: number = 10;
+
   constructor(private contactService: ContactService, 
     private confirmationService: ConfirmationService, 
     public dialogService: DialogService
@@ -26,7 +30,13 @@ export class ContactsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.contactService.loadContacts();
+    this.contactService.loadContacts(this.rows, this.currentPage);
+  }
+
+  onPageChange(event: any) {
+    this.currentPage = event.first;
+    this.rows = event.rows;
+    this.contactService.loadContacts(this.rows, this.currentPage);
   }
 
   search(): void {
@@ -41,7 +51,7 @@ export class ContactsComponent implements OnInit {
                                       )
                                   ));
     } else {
-      this.contactService.loadContacts();
+      this.contactService.loadContacts(10, 0);
     }
   }
 

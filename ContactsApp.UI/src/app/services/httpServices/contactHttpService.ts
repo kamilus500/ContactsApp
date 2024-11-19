@@ -11,8 +11,8 @@ export class ContactHttpService {
     private API_URL : string = 'https://localhost:7239';
     private httpClient: HttpClient = inject(HttpClient);
 
-    protected getAll() : Observable<ContactDto[]> {
-        return this.httpClient.get<ContactDto[]>(`${this.API_URL}/GetContacts`);
+    protected getAll(take: number, skip: number) : Observable<ContactDto[]> {
+        return this.httpClient.get<ContactDto[]>(`${this.API_URL}/GetContacts/${take}/${skip}`);
     }
 
     protected getById(contactId: string) : Observable<ContactDto> {

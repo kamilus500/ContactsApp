@@ -30,9 +30,11 @@ namespace ContactsApp.Infrastructure.Repositories
                                 .AsNoTracking()
                                 .FirstOrDefaultAsync(x => x.Id == contactId, cancellationToken);
 
-        public async Task<IEnumerable<Contact>> GetContacts(CancellationToken cancellationToken)
+        public async Task<IEnumerable<Contact>> GetContacts(int take, int skip, CancellationToken cancellationToken)
          => await _dbContext.Contacts
                             .AsNoTracking()
+                            .Skip(skip)
+                            .Take(take)
                             .ToListAsync(cancellationToken);
 
         public async Task<Contact> UpdateContact(Contact contact, CancellationToken cancellationToken)

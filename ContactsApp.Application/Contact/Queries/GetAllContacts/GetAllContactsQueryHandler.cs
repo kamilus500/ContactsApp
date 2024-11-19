@@ -24,10 +24,11 @@ namespace ContactsApp.Application.Contact.Queries.GetAllContacts
         public async Task<IEnumerable<ContactDto>> Handle(GetAllContactsQuery request, CancellationToken cancellationToken)
         {
            _logger.LogInformation($"GetAllContactsQuerys handler execute {DateTime.UtcNow}");
+            var cacheKey = $"{CacheItemKeys.allContactsCacheKey}_{request.Take}_{request.Skip}";
 
-            if (!_memoryCache.TryGetValue(CacheItemKeys.allContactsCacheKey, out IEnumerable<ContactDto> contactDtos))
+            if (!_memoryCache.TryGetValue(cacheKey, out IEnumerable<ContactDto> contactDtos))
             {
-                var contacts = await _contactsRepository.GetContacts( cancellationToken);
+                var contacts = await _contactsRepository.GetContacts(request.Take, request.Skip,cancellationToken);
 
                 contactDtos = contacts.Adapt<IEnumerable<ContactDto>>();
 
@@ -37,7 +38,7 @@ namespace ContactsApp.Application.Contact.Queries.GetAllContacts
                     .SetPriority(CacheItemPriority.Normal)
                     .SetSize(1024);
 
-                _memoryCache.Set(CacheItemKeys.allContactsCacheKey, contactDtos, cacheEntryOptions);
+                _memoryCache.Set(cacheKey, contactDtos, cacheEntryOptions);
             }
             
             return contactDtos;

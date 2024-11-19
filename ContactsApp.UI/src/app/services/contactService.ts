@@ -17,8 +17,8 @@ export class ContactService extends ContactHttpService
         super()
     }
 
-    loadContacts(): void {
-        this.getAll()
+    loadContacts(take: number, skip: number): void {
+        this.getAll(take, skip)
             .subscribe({
                 next: (contacts) => {
                     this.contacts$.next(contacts)
@@ -46,7 +46,7 @@ export class ContactService extends ContactHttpService
             .subscribe({
                 next: () => {
                     this.loadingService.show();
-                    this.loadContacts();
+                    this.loadContacts(10, 0);
                     this.loadingService.hide();
                 },
                 error: (error) => {
@@ -60,7 +60,7 @@ export class ContactService extends ContactHttpService
             .subscribe({
                 next: () => {
                     this.loadingService.show();
-                    this.loadContacts();
+                    this.loadContacts(10, 0);
                     this.loadingService.hide();
                 },
                 error: (error) => {
@@ -74,7 +74,7 @@ export class ContactService extends ContactHttpService
             .subscribe({
                 next: () => {
                     this.loadingService.show();
-                    this.loadContacts();
+                    this.loadContacts(10, 0);
                     this.loadingService.hide();
                 },
                 error: () => {

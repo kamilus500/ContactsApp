@@ -8,6 +8,15 @@
     </p-button>
 </div>
 
+<div class="card flex justify-content-center pagination-section">
+    <p-paginator 
+        (onPageChange)="onPageChange($event)" 
+        [first]="currentPage" 
+        [rows]="rows" 
+        [totalRecords]="120" 
+        [rowsPerPageOptions]="[10, 20, 30]" />
+</div>
+
 <div class="contact-container">
     <div *ngFor="let contact of contacts$ | async"  class="contact-card">
         <p-card>

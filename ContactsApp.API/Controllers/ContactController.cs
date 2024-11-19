@@ -18,9 +18,9 @@ namespace ContactsApp.API.Controllers
         public ContactController(IMediator mediator)
             => _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
-        [HttpGet("/GetContacts")]
-        public async Task<ActionResult> GetContacts()
-            => Ok(await _mediator.Send(new GetAllContactsQuery()));
+        [HttpGet("/GetContacts/{take}/{skip}")]
+        public async Task<ActionResult> GetContacts([FromRoute] int take, [FromRoute] int skip)
+            => Ok(await _mediator.Send(new GetAllContactsQuery(take, skip)));
 
         [HttpGet("/GetContactById/{id}")]
         public async Task<ActionResult> GetContactById([FromRoute]string id)

@@ -33,6 +33,8 @@ import { EditContactComponent } from './components/edit-contact/edit-contact.com
 import { FileUploadModule } from 'primeng/fileupload';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { UserService } from './services/userService';
+import { PaginatorModule } from 'primeng/paginator';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,7 +63,8 @@ import { UserService } from './services/userService';
     TabViewModule,
     ToastModule,
     ConfirmDialogModule,
-    FileUploadModule
+    FileUploadModule,
+    PaginatorModule
   ],
   providers: [TokenService, ContactService, AuthService, MessageService, ConfirmationService, DialogService, LocalStorageService, FilterService, UserService, {
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true,
