@@ -1,5 +1,5 @@
 <p-toast />
-<p-card header="Register">
+<p-card header="{{'register' | translate}}">
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <div class="p-field p-fluid">
             <label for="firstName">{{'firstname_field' | translate}}</label>

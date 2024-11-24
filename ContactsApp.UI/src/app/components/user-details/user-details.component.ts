@@ -34,7 +34,7 @@ export class UserDetailsComponent implements OnInit {
       id: [''],
       firstName: ['', [Validators.required]],
       lastName: ['', Validators.required],
-      email: ['', Validators.email]
+      email: ['', [Validators.required, Validators.email]]
     });
   }
 

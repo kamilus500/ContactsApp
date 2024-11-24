@@ -3,24 +3,24 @@
     <img src="{{image$ | async}}" class="p-mr-2" width="10rem" height="10rem">
   </div>
   <div class="p-field p-fluid">
-      <label for="firstName">First name</label>
-      <input id="firstName" pInputText formControlName="firstName" placeholder="Enter your first name" />
+      <label for="firstName">{{'firstname_field' | translate}}</label>
+      <input id="firstName" pInputText formControlName="firstName" placeholder="{{'firstname_field_placeholder' | translate}}" />
       @if(userForm.get('firstName')?.invalid && userForm.get('firstName')?.touched) {
-          <p-message severity="error" text="Invalid first name"></p-message>
+          <p-message severity="error" text="{{'firstname_field_required' | translate}}"></p-message>
       }
   </div>
   <div class="p-field p-fluid">
-      <label for="lastName">Last name</label>
-      <input id="lastName" type="lastName" pInputText formControlName="lastName" placeholder="Enter your last name" />
+      <label for="lastName">{{'lastname_field' | translate}}</label>
+      <input id="lastName" type="lastName" pInputText formControlName="lastName" placeholder="{{'lastname_field_placeholder' | translate}}" />
       @if (userForm.get('lastName')?.invalid && userForm.get('lastName')?.touched) {
-          <p-message severity="error" text="Last name is required"></p-message>
+          <p-message severity="error" text="{{'lastname_field_required' | translate}}"></p-message>
       }
   </div>
   <div class="p-field p-fluid">
     <label for="email">Email</label>
-    <input id="email" type="email" pInputText formControlName="email" placeholder="Enter your email" />
+    <input id="email" type="email" pInputText formControlName="email" placeholder="{{'email_field_placeholder' | translate}}" />
     @if (userForm.get('email')?.invalid && userForm.get('email')?.touched) {
-        <p-message severity="error" text="Email is required"></p-message>
+        <p-message severity="error" text="{{'email_field_invalid' | translate}}"></p-message>
     }
   </div>
   <div class="p-field p-fluid">
@@ -28,6 +28,6 @@
   </div>
   <input id="id" formControlName="id" type="hidden" />
   <div class="save-button">
-      <button pButton label="Save" type="submit" class="p-button-error" [disabled]="userForm.invalid"></button>
+      <button pButton label="{{'save_button' | translate}}" type="submit" class="p-button-error" [disabled]="userForm.invalid"></button>
   </div>
 </form>

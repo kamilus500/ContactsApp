@@ -34,7 +34,6 @@ export class NavbarComponent implements OnInit {
 
   showDetails(): void {
     this.ref = this.dialogService.open(UserDetailsComponent, {
-      header: 'User details',
       modal: true,
       contentStyle: { overflow: 'auto' },
       width: '25%'

@@ -18,5 +18,7 @@
     "login": "Zaloguj się",
     "register": "Zarejestruj się",
     "login_tab": "Logowanie",
-    "register_tab": "Rejestracja"
+    "register_tab": "Rejestracja",
+    "save_button": "Zapisz",
+    "user_details_text": "Detale użytkownika"
 }

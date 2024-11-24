@@ -17,5 +17,7 @@
     "login": "Login",
     "register": "Register",
     "login_tab": "Login",
-    "register_tab": "Register"
+    "register_tab": "Register",
+    "save_button": "Save",
+    "user_details_text": "User details"
 }
