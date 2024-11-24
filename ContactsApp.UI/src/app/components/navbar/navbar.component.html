@@ -5,7 +5,6 @@
       } @else {
         <p-avatar icon="pi pi-user" size="xlarge" shape="circle" class="p-mr-2 avatar-image"></p-avatar>
       }
-      
       <span class="user-fullname" (click)="showDetails()">{{userFullName$ | async}}</span>
       <button pButton (click)="logout()" icon="pi pi-sign-out" class="p-button-danger"></button>
     </div>

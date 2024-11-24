@@ -28,8 +28,4 @@ export class AppComponent {
       this.authService.setImage(imageUrl);
     }
   }
-
-  changeLanguage(language: string) {
-    this.translate.use(language);
-  }
 }

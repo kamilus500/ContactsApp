@@ -23,5 +23,11 @@
     "login_tab": "Logowanie",
     "register_tab": "Rejestracja",
     "save_button": "Zapisz",
-    "user_details_text": "Detale użytkownika"
+    "user_details_text": "Detale użytkownika",
+    "create_contact_header": "Utworzenie kontaktu",
+    "update_contact_header": "Edycja kontaktu",
+    "delete_contact_message": "Czy napewno chcesz usunąć kontakt ?",
+    "confirmation": "Potwierdzenie",
+    "accept": "Tak",
+    "reject": "Nie"
 }

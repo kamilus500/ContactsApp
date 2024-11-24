@@ -45,6 +45,23 @@
     } 
 }
 
+.flags-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+}
+  
+.flag {
+    width: 2.5rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+  
+.flag:hover {
+    transform: scale(1.1);
+}
+
 .pagination-section {
     margin-top: 1rem;
 }

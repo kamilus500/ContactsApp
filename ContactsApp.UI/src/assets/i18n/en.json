@@ -12,6 +12,7 @@
     "firstname_field": "First name",
     "firstname_field_required": "First name is required",
     "firstname_field_placeholder": "Enter first name",
+    "lastname_field": "Last name",
     "lastname_field_required": "Last name is required",
     "lastName_field_placeholder": "Enter lastName",
     "numberphone_field": "Number phone",
@@ -22,5 +23,11 @@
     "login_tab": "Login",
     "register_tab": "Register",
     "save_button": "Save",
-    "user_details_text": "User details"
+    "user_details_text": "User details",
+    "create_contact_header": "Create contact",
+    "update_contact_header": "Update contact",
+    "delete_contact_message": "Are you sure to remove this contact",
+    "confirmation": "Confirmation",
+    "accept": "Yes",
+    "reject": "No"
 }

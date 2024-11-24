@@ -1,30 +1,30 @@
 <form [formGroup]="updateContactForm" (ngSubmit)="onSubmit()">
     <div class="p-field p-fluid">
-        <label for="firstName">First name</label>
-        <input id="firstName" pInputText formControlName="firstName" placeholder="Enter first name" [value]="(contact$ | async)?.firstName"/>
+        <label for="firstName">{{'firstname_field' | translate}}</label>
+        <input id="firstName" pInputText formControlName="firstName" placeholder="{{'firstname_field_placeholder' | translate}}" />
         @if(updateContactForm.get('firstName')?.invalid && updateContactForm.get('firstName')?.touched) {
-            <p-message severity="error" text="Invalid first name"></p-message>
+            <p-message severity="error" text="{{'firstname_field_required' | translate}}"></p-message>
         }
     </div>
     <div class="p-field p-fluid">
-        <label for="lastName">Last name</label>
-        <input id="lastName" pInputText formControlName="lastName" placeholder="Enter lastName" [value]="(contact$ | async)?.lastName"/>
+        <label for="lastName">{{'lastname_field' | translate}}</label>
+        <input id="lastName" pInputText formControlName="lastName" placeholder="{{'lastname_field_placeholder' | translate}}" />
         @if (updateContactForm.get('lastName')?.invalid && updateContactForm.get('lastName')?.touched) {
-            <p-message severity="error" text="Last name is required"></p-message>
+            <p-message severity="error" text="{{'lastname_field_required' | translate}}"></p-message>
         }
     </div>
     <div class="p-field p-fluid">
         <label for="email">Email</label>
-        <input id="email" pInputText formControlName="email" placeholder="Enter email" [value]="(contact$ | async)?.email"/>
+        <input id="email" pInputText formControlName="email" placeholder="{{'email_field_placeholder' | translate}}" />
         @if (updateContactForm.get('email')?.invalid && updateContactForm.get('email')?.touched) {
-            <p-message severity="error" text="Email is required"></p-message>
+            <p-message severity="error" text="{{'email_field_invalid' | translate}}"></p-message>
         }
     </div>
     <div class="p-field p-fluid">
-        <label for="numberPhone">Number phone</label>
-        <input id="numberPhone" pInputText formControlName="numberPhone" placeholder="Enter number phone" [value]="(contact$ | async)?.numberPhone"/>
+        <label for="numberPhone">{{'numberphone_field' | translate}}</label>
+        <input id="numberPhone" pInputText formControlName="numberPhone" placeholder="{{'numberphone_field_placeholder' | translate}}" />
         @if (updateContactForm.get('numberPhone')?.invalid && updateContactForm.get('numberPhone')?.touched) {
-            <p-message severity="error" text="Number phone is required"></p-message>
+            <p-message severity="error" text="{{'numberphone_field_required' | translate}}"></p-message>
         }
     </div>
     <div class="p-field p-fluid">
@@ -33,6 +33,6 @@
     <input type="hidden" id="id" formControlName="id" value="{{(contact$ | async)?.id}}" />
     <input type="hidden" id="userId" formControlName="userId" value=""/>
     <div class="update-button">
-        <button pButton label="Save" type="submit" class="p-button-success" [disabled]="updateContactForm.invalid"></button>
+        <button pButton label="{{'save_button' | translate}}" type="submit" class="p-button-success" [disabled]="updateContactForm.invalid"></button>
     </div>
 </form>

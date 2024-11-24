@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 import { LocalStorageService } from '../../services/localStorageService';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { UserDetailsComponent } from '../user-details/user-details.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-navbar',
@@ -22,7 +23,8 @@ export class NavbarComponent implements OnInit {
     private localStorageService: LocalStorageService,
     private router: Router,
     private authService: AuthService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private translate: TranslateService
   ) {
     
   }
@@ -32,9 +34,15 @@ export class NavbarComponent implements OnInit {
     this.imageUrl$ = this.authService.imageUrl$;
   }
 
+  onFlagClick(country: string): void {
+    this.translate.use(country);
+  }
+
   showDetails(): void {
+    const header = this.translate.instant('user_details_text');
     this.ref = this.dialogService.open(UserDetailsComponent, {
       modal: true,
+      header: header,
       contentStyle: { overflow: 'auto' },
       width: '25%'
     });

@@ -6,6 +6,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AddContactComponent } from '../add-contact/add-contact.component';
 import { map, Observable } from 'rxjs';
 import { EditContactComponent } from '../edit-contact/edit-contact.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-contacts',
@@ -24,13 +25,18 @@ export class ContactsComponent implements OnInit {
 
   constructor(private contactService: ContactService, 
     private confirmationService: ConfirmationService, 
-    public dialogService: DialogService
+    public dialogService: DialogService,
+    private translate: TranslateService
   ) {
     this.contacts$ = this.contactService.contacts$;
   }
 
   ngOnInit(): void {
     this.contactService.loadContacts(this.rows, this.currentPage);
+  }
+
+  onFlagClick(country: string): void {
+    this.translate.use(country);
   }
 
   onPageChange(event: any) {
@@ -56,17 +62,17 @@ export class ContactsComponent implements OnInit {
   }
 
   show(formName: string, contactId: string) {
+    const header = formName === 'Add' ? this.translate.instant('create_contact_header'): this.translate.instant('update_contact_header');
     if (formName === 'Add') {
       this.ref = this.dialogService.open(AddContactComponent, {
-        header: 'Create contact',
+        header: header,
         modal: true,
         contentStyle: { overflow: 'auto' },
       });
     } else {
       this.contactService.loadContactById(contactId);
-
       this.ref = this.dialogService.open(EditContactComponent, {
-        header: 'Update contact',
+        header: header,
         modal: true,
         contentStyle: { overflow: 'auto' },
       });
@@ -74,13 +80,19 @@ export class ContactsComponent implements OnInit {
   }
 
   delete(event: Event, contactId: string) {
+    const message = this.translate.instant('delete_contact_message');
+    const header = this.translate.instant('confirmation');
+    const acceptLabel = this.translate.instant('accept');
+    const rejectLabel = this.translate.instant('reject');
     this.confirmationService.confirm({
         target: event.target as EventTarget,
-        message: 'Are you sure to remove this contact',
-        header: 'Confirmation',
+        message: message,
+        header: header,
         icon: 'pi pi-exclamation-triangle',
         acceptIcon:"none",
         rejectIcon:"none",
+        acceptLabel: acceptLabel,
+        rejectLabel: rejectLabel,
         rejectButtonStyleClass:"p-button-text",
         accept: () => {
           this.contactService.deleteContact(contactId);

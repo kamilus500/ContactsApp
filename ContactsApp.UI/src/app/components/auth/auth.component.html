@@ -4,6 +4,20 @@
             <span>{{ 'application_title' | translate }}</span>
         </i>
     </div>
+
+    <div class="flags-container">
+        <img 
+          src="assets/united-kingdom.png" 
+          alt="UK Flag" 
+          class="flag" 
+          (click)="onFlagClick('en')">
+        <img 
+          src="assets/poland.png" 
+          alt="Poland Flag" 
+          class="flag" 
+          (click)="onFlagClick('pl')">
+    </div>
+      
     <p-tabView>
         <p-tabPanel header="{{'login_tab' | translate}}">
             <app-login></app-login>
