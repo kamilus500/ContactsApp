@@ -14,7 +14,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { AuthService } from './services/authService';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AvatarModule } from 'primeng/avatar';
 import { ContactService } from './services/contactService';
@@ -34,6 +34,12 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { UserService } from './services/userService';
 import { PaginatorModule } from 'primeng/paginator';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -49,6 +55,13 @@ import { PaginatorModule } from 'primeng/paginator';
     UserDetailsComponent
   ],
   imports: [
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
     BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,

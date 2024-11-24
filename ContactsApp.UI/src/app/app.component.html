@@ -1,5 +1,9 @@
 @if (isLogin$ | async) {
     <app-navbar></app-navbar>
 }
+<button (click)="changeLanguage('en')">English</button>
+<button (click)="changeLanguage('pl')">Polski</button>
+
+
 <app-loading-spinner></app-loading-spinner>
 <router-outlet></router-outlet>

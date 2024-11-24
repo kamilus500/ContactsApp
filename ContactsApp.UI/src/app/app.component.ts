@@ -3,7 +3,7 @@ import { TokenService } from './services/tokenService';
 import { LocalStorageService } from './services/localStorageService';
 import { Observable } from 'rxjs';
 import { AuthService } from './services/authService';
-
+import { TranslateService  } from '@ngx-translate/core';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -14,7 +14,10 @@ export class AppComponent {
 
   isLogin$: Observable<boolean>
 
-  constructor(private tokenService: TokenService, private localStorageService: LocalStorageService, private authService: AuthService) {
+  constructor(private tokenService: TokenService, private localStorageService: LocalStorageService, private authService: AuthService, private translate: TranslateService) {
+    this.translate.setDefaultLang('pl');
+    this.translate.use('pl');
+    
     this.isLogin$ = this.authService.isLogin$;
 
     if (this.tokenService.hasToken()) {
@@ -24,5 +27,9 @@ export class AppComponent {
       let imageUrl = this.localStorageService.get('image');
       this.authService.setImage(imageUrl);
     }
+  }
+
+  changeLanguage(language: string) {
+    this.translate.use(language);
   }
 }

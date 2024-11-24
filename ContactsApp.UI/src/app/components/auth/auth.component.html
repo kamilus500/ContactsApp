@@ -1,14 +1,14 @@
 <div class="auth-container">
     <div class="logo">
         <i class="pi pi-address-book">
-            <span>Contacts</span>
+            <span>{{ 'application_title' | translate }}</span>
         </i>
     </div>
     <p-tabView>
-        <p-tabPanel header="Login">
+        <p-tabPanel header="{{'login_tab' | translate}}">
             <app-login></app-login>
         </p-tabPanel>
-        <p-tabPanel header="Register">
+        <p-tabPanel header="{{'register_tab' | translate}}">
             <app-register></app-register>
         </p-tabPanel>
     </p-tabView>

@@ -3,20 +3,20 @@
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div class="p-field p-fluid">
             <label for="email">Email</label>
-            <input id="email" pInputText formControlName="email" placeholder="Enter your email" />
+            <input id="email" pInputText formControlName="email" placeholder="{{ 'email_field_placeholder' | translate }}" />
             @if(loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
-                <p-message severity="error" text="Invalid email"></p-message>
+                <p-message severity="error" text="{{ 'email_field_invalid' | translate }}"></p-message>
             }
         </div>
         <div class="p-field p-fluid">
-            <label for="password">Password</label>
-            <input id="password" type="password" pInputText formControlName="password" placeholder="Enter your password" />
+            <label for="password">{{'password_field' | translate}}</label>
+            <input id="password" type="password" pInputText formControlName="password" placeholder="{{ 'password_field_placeholder' | translate }}" />
             @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
-                <p-message severity="error" text="Password is required"></p-message>
+                <p-message severity="error" text="{{ 'password_field_required' | translate }}"></p-message>
             }
         </div>
         <div class="login-button">
-            <button pButton label="Login" type="submit" class="p-button-error" [disabled]="loginForm.invalid"></button>
+            <button pButton label="{{'login' | translate}}" type="submit" class="p-button-error" [disabled]="loginForm.invalid"></button>
         </div>
     </form>
 </p-card>
