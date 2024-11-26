@@ -33,6 +33,6 @@
     <input type="hidden" id="id" formControlName="id" value="{{(contact$ | async)?.id}}" />
     <input type="hidden" id="userId" formControlName="userId" value=""/>
     <div class="update-button">
-        <button pButton label="{{'save_button' | translate}}" type="submit" class="p-button-success" [disabled]="updateContactForm.invalid"></button>
+        <button pButton label="{{'save_button' | translate}}" type="submit" class="p-button" [disabled]="updateContactForm.invalid"></button>
     </div>
 </form>
