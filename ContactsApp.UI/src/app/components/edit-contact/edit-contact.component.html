@@ -8,7 +8,7 @@
     </div>
     <div class="p-field p-fluid">
         <label for="lastName">{{'lastname_field' | translate}}</label>
-        <input id="lastName" pInputText formControlName="lastName" placeholder="{{'lastname_field_placeholder' | translate}}" />
+        <input id="lastName" pInputText formControlName="lastName" placeholder="{{'lastName_field_placeholder' | translate}}" />
         @if (updateContactForm.get('lastName')?.invalid && updateContactForm.get('lastName')?.touched) {
             <p-message severity="error" text="{{'lastname_field_required' | translate}}"></p-message>
         }
