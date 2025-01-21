@@ -42,7 +42,6 @@ namespace ContactsApp.Application.Contact.Queries.GetAllContacts
 
                 _memoryCache.Set(cacheKey, contactDtos, cacheEntryOptions);
                 CacheItemKeys.actualCacheKey = cacheKey;
-                return contactDtos;
             }
             return contactDtos;
         }
