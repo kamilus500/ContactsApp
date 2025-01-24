@@ -9,7 +9,7 @@ namespace ContactsApp.Domain.Dtos
         public string LastName { get; set; }
         public string Email { get; set; }
         public string NumberPhone { get; set; }
-        public IFormFile Image { get; set; }
+        public IFormFile? Image { get; set; }
         public string? UserId { get; set; }
     }
 }

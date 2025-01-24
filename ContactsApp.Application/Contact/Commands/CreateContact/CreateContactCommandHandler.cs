@@ -37,10 +37,13 @@ namespace ContactsApp.Application.Contact.Commands.CreateContact
 
             newContact.UserId = _tokenRepository.GetUserId();
 
-            using (var memoryStream = new MemoryStream())
+            if (request.Image != null)
             {
-                await request.Image.CopyToAsync(memoryStream);
-                newContact.Image = memoryStream.ToArray();
+                using (var memoryStream = new MemoryStream())
+                {
+                    await request.Image.CopyToAsync(memoryStream);
+                    newContact.Image = memoryStream.ToArray();
+                }
             }
 
             await _contactsRepository.CreateContact(newContact, cancellationToken);

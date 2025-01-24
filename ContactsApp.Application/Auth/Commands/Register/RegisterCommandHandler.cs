@@ -27,10 +27,13 @@ namespace ContactsApp.Application.Auth.Commands.Register
                 UserName = request.Email
             };
 
-            using (var memoryStream = new MemoryStream())
+            if (request.Image != null)
             {
-                await request.Image.CopyToAsync(memoryStream);
-                newUser.Image = memoryStream.ToArray();
+                using (var memoryStream = new MemoryStream())
+                {
+                    await request.Image.CopyToAsync(memoryStream);
+                    newUser.Image = memoryStream.ToArray();
+                }
             }
 
             var result = await _userManager.CreateAsync(newUser, request.Password);

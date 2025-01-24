@@ -33,10 +33,9 @@ namespace ContactsApp.Application.Contact.Queries.GetContactById
                 contactDto = contact.Adapt<ContactDto>();
 
                 var cacheEntryOptions = new MemoryCacheEntryOptions()
-                    .SetSlidingExpiration(TimeSpan.FromSeconds(60))
-                    .SetAbsoluteExpiration(TimeSpan.FromSeconds(3600))
-                    .SetPriority(CacheItemPriority.Normal)
-                    .SetSize(1024);
+                    .SetSlidingExpiration(TimeSpan.FromMinutes(5))
+                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(3))
+                    .SetSize(50);
 
                 _memoryCache.Set(cacheKey, contactDto, cacheEntryOptions);
             }

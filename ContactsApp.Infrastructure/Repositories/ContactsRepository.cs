@@ -27,6 +27,7 @@ namespace ContactsApp.Infrastructure.Repositories
 
         public async Task<Contact> GetContactById(string contactId, CancellationToken cancellationToken)
             => await _dbContext.Contacts
+                                .AsNoTracking()
                                 .FirstOrDefaultAsync(x => x.Id == contactId, cancellationToken);
 
         public async Task<IEnumerable<Contact>> GetContacts(int take, int skip, CancellationToken cancellationToken)

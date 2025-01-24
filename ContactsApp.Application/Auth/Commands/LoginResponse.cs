@@ -4,6 +4,6 @@
     {
         public string Token { get; set; }
         public string FullName { get; set; }
-        public byte[] UserImage { get; set; }
+        public byte[]? UserImage { get; set; }
     }
 }

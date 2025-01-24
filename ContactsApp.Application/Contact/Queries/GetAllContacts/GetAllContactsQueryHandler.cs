@@ -35,10 +35,9 @@ namespace ContactsApp.Application.Contact.Queries.GetAllContacts
                 contactDtos = contacts.Adapt<IEnumerable<ContactDto>>();
 
                 var cacheEntryOptions = new MemoryCacheEntryOptions()
-                    .SetSlidingExpiration(TimeSpan.FromSeconds(60))
-                    .SetAbsoluteExpiration(TimeSpan.FromSeconds(3600))
-                    .SetPriority(CacheItemPriority.Normal)
-                    .SetSize(1024);
+                    .SetSlidingExpiration(TimeSpan.FromMinutes(5))
+                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(2))
+                    .SetSize(50);
 
                 _memoryCache.Set(cacheKey, contactDtos, cacheEntryOptions);
                 CacheItemKeys.actualCacheKey = cacheKey;

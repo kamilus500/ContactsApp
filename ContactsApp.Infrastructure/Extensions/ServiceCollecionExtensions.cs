@@ -65,7 +65,10 @@ namespace ContactsApp.Infrastructure.Extensions
                 .AddSignInManager()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddMemoryCache();
+            services.AddMemoryCache(options =>
+            {
+                options.SizeLimit = 1024;
+            });
 
             services.AddTransient<IContactsRepository, ContactsRepository>();
             services.AddTransient<ITokenRepository, TokenRepository>();
