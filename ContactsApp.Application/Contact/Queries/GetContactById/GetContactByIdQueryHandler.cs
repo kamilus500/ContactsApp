@@ -1,4 +1,5 @@
-﻿using ContactsApp.Domain.Dtos;
+﻿using ContactsApp.Application.BaseClasses;
+using ContactsApp.Domain.Dtos;
 using ContactsApp.Domain.Global;
 using ContactsApp.Domain.Interfaces;
 using Mapster;
@@ -8,16 +9,12 @@ using Microsoft.Extensions.Logging;
 
 namespace ContactsApp.Application.Contact.Queries.GetContactById
 {
-    public class GetContactByIdQueryHandler : IRequestHandler<GetContactByIdQuery, ContactDto>
+    public class GetContactByIdQueryHandler : BaseHandler<GetContactByIdQueryHandler>,IRequestHandler<GetContactByIdQuery, ContactDto>
     {
         private readonly IContactsRepository _contactsRepository;
-        private readonly IMemoryCache _memoryCache;
-        private readonly ILogger<GetContactByIdQueryHandler> _logger;
-        public GetContactByIdQueryHandler(IContactsRepository contactsRepository, IMemoryCache memoryCache, ILogger<GetContactByIdQueryHandler> logger)
+        public GetContactByIdQueryHandler(IContactsRepository contactsRepository, IMemoryCache memoryCache, ILogger<GetContactByIdQueryHandler> logger) : base(memoryCache, logger)
         {
             _contactsRepository = contactsRepository ?? throw new ArgumentNullException(nameof(contactsRepository));
-            _memoryCache = memoryCache ?? throw new ArgumentNullException(nameof(memoryCache));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<ContactDto> Handle(GetContactByIdQuery request, CancellationToken cancellationToken)

@@ -1,30 +1,25 @@
-﻿using ContactsApp.Domain.Global;
+﻿using ContactsApp.Application.BaseClasses;
+using ContactsApp.Domain.Global;
 using ContactsApp.Domain.Interfaces;
 using Mapster;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
-using System.Security.Claims;
 
 namespace ContactsApp.Application.Contact.Commands.CreateContact
 {
-    public class CreateContactCommandHandler : IRequestHandler<CreateContactCommand, Domain.Entities.Contact>
+    public class CreateContactCommandHandler : BaseHandler<CreateContactCommandHandler>, IRequestHandler<CreateContactCommand, Domain.Entities.Contact>
     {
         private readonly IContactsRepository _contactsRepository;
-        private readonly IMemoryCache _memoryCache;
         private readonly ITokenRepository _tokenRepository;
-        private ILogger<CreateContactCommandHandler> _logger;
         
         public CreateContactCommandHandler(IContactsRepository contactsRepository, 
             IMemoryCache memoryCache, 
             ILogger<CreateContactCommandHandler> logger, 
             ITokenRepository tokenRepository
-        )
+        ) : base(memoryCache, logger)
         {
             _contactsRepository = contactsRepository ?? throw new ArgumentNullException(nameof(contactsRepository));
-            _memoryCache = memoryCache ?? throw new ArgumentNullException(nameof(memoryCache));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _tokenRepository = tokenRepository ?? throw new ArgumentNullException(nameof(tokenRepository));
         }
 

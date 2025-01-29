@@ -1,16 +1,15 @@
-﻿using ContactsApp.Domain.Interfaces;
+﻿using ContactsApp.Application.BaseClasses;
+using ContactsApp.Domain.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace ContactsApp.Application.Auth.Queries.EmailVeryfication
 {
-    public class EmailVeryficationQueryHandler : IRequestHandler<EmailVeryficationQuery, bool>
+    public class EmailVeryficationQueryHandler : BaseHandler<EmailVeryficationQueryHandler>, IRequestHandler<EmailVeryficationQuery, bool>
     {
-        private readonly ILogger<EmailVeryficationQuery> _logger;
         private readonly IUserRepository _userRepository;
-        public EmailVeryficationQueryHandler(ILogger<EmailVeryficationQuery> logger, IUserRepository userRepository)
+        public EmailVeryficationQueryHandler(ILogger<EmailVeryficationQueryHandler> logger, IUserRepository userRepository) : base(null, logger)
         {
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         }
 

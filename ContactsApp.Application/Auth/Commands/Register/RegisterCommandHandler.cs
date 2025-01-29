@@ -1,18 +1,18 @@
-﻿using ContactsApp.Domain.Entities;
+﻿using ContactsApp.Application.BaseClasses;
+using ContactsApp.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 
 namespace ContactsApp.Application.Auth.Commands.Register
 {
-    public class RegisterCommandHandler : IRequestHandler<RegisterCommand, bool>
+    public class RegisterCommandHandler : BaseHandler<RegisterCommandHandler>, IRequestHandler<RegisterCommand, bool>
     {
         private readonly UserManager<User> _userManager;
-        private readonly ILogger<RegisterCommandHandler> _logger;
-        public RegisterCommandHandler(UserManager<User> userManager, ILogger<RegisterCommandHandler> logger)
+        public RegisterCommandHandler(UserManager<User> userManager, IMemoryCache memoryCache, ILogger<RegisterCommandHandler> logger) : base(memoryCache, logger)
         {
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<bool> Handle(RegisterCommand request, CancellationToken cancellationToken)
