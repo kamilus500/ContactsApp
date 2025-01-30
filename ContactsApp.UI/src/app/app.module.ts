@@ -36,6 +36,7 @@ import { UserService } from './services/userService';
 import { PaginatorModule } from 'primeng/paginator';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { ApiInterceptor } from './interceptors/apiInterceptor';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -81,6 +82,8 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   providers: [TokenService, ContactService, AuthService, MessageService, ConfirmationService, DialogService, LocalStorageService, FilterService, UserService, {
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true,
+  }, {
+    provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true,
   }],
   bootstrap: [AppComponent]
 })
