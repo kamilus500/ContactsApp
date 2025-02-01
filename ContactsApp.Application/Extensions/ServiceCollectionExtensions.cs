@@ -14,6 +14,8 @@ namespace ContactsApp.Application.Extensions
     {
         public static void AddApplication(this IServiceCollection services)
         {
+            services.AddScoped<ErrorHandlingMiddleware>();
+
             services.AddMapster();
 
             MapsterConfig.Configure();
@@ -27,7 +29,7 @@ namespace ContactsApp.Application.Extensions
 
         public static void AddMiddlewares(this IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseMiddleware<ErrorHandlingMiddleware>();
+            app.UseMiddleware<ErrorHandlingMiddleware>();  
         }
     }
 }

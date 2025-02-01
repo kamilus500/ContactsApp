@@ -5,7 +5,9 @@ using ContactsApp.Infrastructure.Repositories;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -37,7 +39,7 @@ namespace ContactsApp.Infrastructure.Extensions
             {
                 options.AddPolicy("AllowSpecificOrigins", policy =>
                 {
-                    policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod();
+                    policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
                 });
             });
 

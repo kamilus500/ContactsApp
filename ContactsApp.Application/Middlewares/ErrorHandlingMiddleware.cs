@@ -1,26 +1,23 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System.Net;
 
 namespace ContactsApp.Application.Middlewares
 {
-    public class ErrorHandlingMiddleware
+    public class ErrorHandlingMiddleware : IMiddleware
     {
-        private readonly RequestDelegate _next;
         private readonly ILogger<ErrorHandlingMiddleware> _logger;
 
-        public ErrorHandlingMiddleware(RequestDelegate next, ILogger<ErrorHandlingMiddleware> logger)
+        public ErrorHandlingMiddleware(ILogger<ErrorHandlingMiddleware> logger)
         {
-            _next = next ?? throw new ArgumentNullException(nameof(next));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public async Task InvokeAsync(HttpContext context)
+        public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
             try
             {
-                await _next(context);
+                await next(context);
             }
             catch (Exception ex)
             {
