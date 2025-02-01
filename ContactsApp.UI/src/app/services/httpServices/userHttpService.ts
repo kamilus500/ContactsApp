@@ -2,13 +2,14 @@ import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { UserDto } from "../../models/userDto";
+import { environment } from "../../../environments/environment";
 
 @Injectable({
     providedIn: 'root'
 })
   
 export class UserHttpService {
-    private API_URL : string = 'https://localhost:7239';
+    private API_URL : string = environment.API_URL;
     private httpClient: HttpClient = inject(HttpClient);
 
     protected update(userDto: FormData): Observable<UserDto> {

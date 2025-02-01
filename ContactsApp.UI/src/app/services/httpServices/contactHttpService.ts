@@ -2,13 +2,14 @@ import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { ContactDto } from "../../models/contactDto";
+import { environment } from "../../../environments/environment";
 
 @Injectable({
     providedIn: 'root'
 })
   
 export class ContactHttpService {
-    private API_URL : string = 'https://localhost:7239';
+    private API_URL : string = environment.API_URL;
     private httpClient: HttpClient = inject(HttpClient);
 
     protected getAll(take: number, skip: number) : Observable<ContactDto[]> {
